@@ -45,13 +45,18 @@ input {
 }
 
 ul {
+  padding: 0;
   list-style: none;
   display: flex;
   font-size: 15px;
 }
 
 li {
-  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.nav-active {
+  border-bottom: 2px solid white;
 }
 
 .text-warning {
