@@ -1,0 +1,68 @@
+.App {
+  text-align: center;
+  background-color: #a7a7a7;
+  height: 100vh;
+}
+
+.App-header {
+  background-color: #333333;
+  min-height: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+a:visited {
+  color: whitesmoke;
+}
+
+a {
+  text-decoration: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 190px;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  width: 100%;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  font-size: 15px;
+}
+
+li {
+  margin-left: 10px;
+}
+
+.text-warning {
+  color: red;
+  font-size: 14px;
+}
+
+.login-btn {
+  width: auto;
+  border: #282c34;
+  background: whitesmoke;
+  font-size: 16px;
+
+}
