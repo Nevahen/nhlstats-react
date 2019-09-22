@@ -32,7 +32,17 @@ const checkLogin = async () => {
   return json.loggedIn;
 }
 
+const logout = () => {
+  return (dispatch: any) => {
+    fetch('//192.168.56.101:3001/auth/logout', {
+      credentials: 'include',
+    })
+    .then(() => dispatch({ type: 'LOGIN_LOGOUT' }))
+  }
+}
+
 export default {
   login,
-  checkLogin
+  checkLogin,
+  logout,
 }

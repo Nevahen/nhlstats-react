@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import userActions from '../_actions/user.actions';
 
 const guestLinks = [
   { title: 'Home', to: '/', exact: true },
@@ -13,26 +14,30 @@ const userLinks = [
 ]
 
 interface INavBarProps {
-  loggedIn: boolean
+  loggedIn: boolean;
+  logout: Function;
 }
 
 const NavBar = (props: INavBarProps) => {
 
   return (
-    <ul>
-
-    { props.loggedIn  
-      
-      ? userLinks.map(value => (
-         <li key={value.to} ><NavLink exact={value.exact} activeClassName="nav-active" to={value.to}>{value.title}</NavLink></li>
-      ))      
-      : guestLinks.map(value => (
-          <li key={value.to} ><NavLink exact={value.exact} activeClassName="nav-active" to={value.to}>{value.title}</NavLink></li>
-        ))
-      }
-
-
-    </ul>
+    <nav>
+      <ul>
+  
+      { props.loggedIn  
+        
+        ? userLinks.map(value => (
+           <li key={value.to} ><NavLink exact={value.exact} activeClassName="nav-active" to={value.to}>{value.title}</NavLink></li>
+        ))      
+        : guestLinks.map(value => (
+            <li key={value.to} ><NavLink exact={value.exact} activeClassName="nav-active" to={value.to}>{value.title}</NavLink></li>
+          ))
+        }
+  
+  
+      </ul>
+      { props.loggedIn && <span onClick={() => props.logout()}>Logout</span>}
+    </nav>
   )
 
 }
@@ -41,4 +46,8 @@ const mapStateToProps = (state: any) =>  ({
   loggedIn: state.authentication.loggedIn,
 })
 
-export default connect(mapStateToProps)(NavBar);
+const mapActionsToProps = {
+  logout: userActions.logout,
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(NavBar);

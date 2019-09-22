@@ -51,6 +51,10 @@ ul {
   font-size: 15px;
 }
 
+nav {
+  display: flex;
+}
+
 li {
   margin-right: 10px;
 }

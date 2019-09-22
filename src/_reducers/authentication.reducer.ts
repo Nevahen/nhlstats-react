@@ -20,5 +20,8 @@ export const authentication = (state = initialState, action: any) => {
        loggingIn: false,
        errors: 'Authentication failed.'}
   }
+  if(action.type === 'LOGIN_LOGOUT') {
+    return { ...state, ...initialState}
+  }
   return state;
 }
