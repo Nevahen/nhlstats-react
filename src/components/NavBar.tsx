@@ -10,7 +10,8 @@ const guestLinks = [
 
 const userLinks = [
   { title: 'Home', to: '/', exact: true },
-  { title: 'Matches', to: '/matches', exact: false }
+  { title: 'Matches', to: '/matches', exact: false },
+  { title: 'New Game', to: '/game', exact: false }
 ]
 
 interface INavBarProps {
