@@ -1,4 +1,5 @@
 import { GameStatus } from "./GameStatus";
+import { IGameEvent } from "./GameEvent";
 
 export interface GameState {
   gameStatus: GameStatus,
@@ -7,5 +8,6 @@ export interface GameState {
   awayTeam: number | null,
   homeScore: number,
   awayScore: number,
-  gameEvents: [],
+  period: number,
+  gameEvents: IGameEvent[],
 }
