@@ -35,8 +35,8 @@ const GameContainer = (props: IGameContainerProps) => (
         <input onClick={() => { props.addPlayer({name:"osku", id:2})}} type="text" />
 
 
-        <button onClick={() => { props.gameEvent( { type: GameEventTypes.GOAL, period: 1, team: 1, player: 1 }) }} >Goal</button>
-        <button onClick={() => { props.gameEvent( { type: GameEventTypes.PERIOD, period: 2 }) }}> Next period</button>
+        <button onClick={() => { props.gameEvent( { type: GameEventTypes.GOAL, team: 1, player: 1 }) }} >Goal</button>
+        <button onClick={() => { props.gameEvent( { type: GameEventTypes.PERIOD }) }}> Next period</button>
 
       </div>
   </div>

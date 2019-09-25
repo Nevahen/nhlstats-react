@@ -8,6 +8,5 @@ export interface GameState {
   awayTeam: number | null,
   homeScore: number,
   awayScore: number,
-  period: number,
   gameEvents: IGameEvent[],
 }

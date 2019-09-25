@@ -5,4 +5,5 @@ export enum GameStatus  {
   THIRD_PERIOD  = 3,
   OVERTIME      = 4,
   SHOOTOUT      = 5,
+  END           = 6,
 }

@@ -28,7 +28,7 @@ const ScoreDisplayer = (props: ScoreDisplayerProps) => (
 );
 
 const mapStateToProps = (state: any) => ({
-  period: state.newgame.period
+  period: state.newgame.gameStatus
 })
 
 export default connect(mapStateToProps)(ScoreDisplayer);

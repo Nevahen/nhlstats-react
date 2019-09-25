@@ -8,7 +8,6 @@ const initialState: GameState = {
   awayTeam: null,
   homeScore: 0,
   awayScore: 0,
-  period: 0,
   gameEvents: []
  };
 
@@ -30,7 +29,13 @@ export const newgame = (state = initialState, action: any) => {
 
   if(action.type === 'NEW_PERIOD') {
     return {
-      ...state, period: state.period + 1
+      ...state, gameStatus: state.gameStatus + 1
+    }
+  }
+
+  if(action.type === 'GAME_END') {
+    return {
+      ...state, gameStatus: GameStatus.END
     }
   }
 
