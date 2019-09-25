@@ -28,3 +28,9 @@ export const gameEvent = (event: IGameEvent) => {
     });
   }
 }
+
+export const endGame = () => {
+  return {
+    type: 'GAME_END',
+  }
+}
