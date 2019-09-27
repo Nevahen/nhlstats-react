@@ -1,21 +1,18 @@
+import Axios from '../Axios';
 
 const login = (username: string, password: string) => {
-  return (dispatch: any) => {
+  return async (dispatch: any) => {
     dispatch(request({ username }));
 
-    fetch('//192.168.56.101:3001/auth', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username, password
-      }),
-    })
-    .then(response => response.json())
-    .then(json => dispatch(success(json)))
-    .catch(err => dispatch(failure(username)))
+    try {
+      const response = await Axios.post('/auth', {
+        username,
+        password
+      });    
+      dispatch(success(response.data));
+    } catch (error) {
+      dispatch(failure(username));
+    }    
   };
 
   function request(user: any) { return { type: 'LOGIN_REQUEST', user } }
@@ -24,19 +21,13 @@ const login = (username: string, password: string) => {
 }
 
 const checkLogin = async () => {
-  const response = await fetch('//192.168.56.101:3001/auth/checkLogin', {
-    credentials: 'include',
-  });
-  const json = await response.json();
-  
-  return json.loggedIn;
+  const response = await Axios.get('/auth/checkLogin');
+  return response.data.loggedIn;
 }
 
 const logout = () => {
   return (dispatch: any) => {
-    fetch('//192.168.56.101:3001/auth/logout', {
-      credentials: 'include',
-    })
+    Axios.get('/auth/logout')
     .then(() => dispatch({ type: 'LOGIN_LOGOUT' }))
   }
 }
