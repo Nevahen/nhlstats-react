@@ -1,15 +1,25 @@
 import './App.css';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 
+import { AuthenticationState } from './_types/AuthenticationState';
+import { GameState } from './_types/GameState';
 import LoginForm from './components/LoginForm';
 import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
 import PrivateRoute from './components/PrivateRoute';
 import GameContainer from './containers/GameContainer';
 
-const App: React.FC = () => {
+interface AppState {
+  authentication : AuthenticationState;
+  newgame: GameState;
+}
+
+class App extends React.Component<AppState> {
+
+  render() {
   return (
     <div className="App">
       <Router>
@@ -29,7 +39,13 @@ const App: React.FC = () => {
         </div>
       </Router>
     </div>
-  );
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state: AppState) => ({
+  authentication: state.authentication,
+  newgame: state.newgame,
+})
+
+export default connect(mapStateToProps)(App);
