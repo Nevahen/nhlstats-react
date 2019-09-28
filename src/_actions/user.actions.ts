@@ -21,8 +21,12 @@ const login = (username: string, password: string) => {
 }
 
 const checkLogin = async () => {
-  const response = await Axios.get('/auth/checkLogin');
-  return response.data.loggedIn;
+  try {
+    const response = await Axios.get('/auth/checkLogin');
+    return response.data.loggedIn;
+  } catch (error) {
+    return false;
+  }
 }
 
 const logout = () => {
