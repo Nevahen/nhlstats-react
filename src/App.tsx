@@ -6,15 +6,17 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 
 import { AuthenticationState } from './_types/AuthenticationState';
 import { GameState } from './_types/GameState';
+import { TeamStore } from './_types/TeamStore';
 import LoginForm from './components/LoginForm';
 import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
 import PrivateRoute from './components/PrivateRoute';
 import GameContainer from './containers/GameContainer';
 
-interface AppState {
+export interface AppState {
   authentication : AuthenticationState;
   newgame: GameState;
+  teamStore: TeamStore;
 }
 
 class App extends React.Component<AppState> {
@@ -45,6 +47,7 @@ class App extends React.Component<AppState> {
 
 const mapStateToProps = (state: AppState) => ({
   authentication: state.authentication,
+  teamStore: state.teamStore,
   newgame: state.newgame,
 })
 
