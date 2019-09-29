@@ -16,3 +16,19 @@ export const fetchTeams = () => {
   function success(payload: any) { return { type: 'TEAMS_SUCCESS', payload } }
   function failure() { return { type: 'TEAMS_FAILURE'} }
 }
+
+export const selectTeam = (target: number, teamID: number) => {
+  console.log(target, teamID)
+  return {
+    type: 'SELECT_TEAM',
+    target,
+    teamID,
+  }  
+}
+
+export const startSelectTeam = (target: number) => {
+  return {
+    type: 'START_SELECT_TEAM',
+    target,
+  }
+}

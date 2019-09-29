@@ -1,0 +1,18 @@
+.teamselector__container {
+  width: 1000px;
+  height: 500px;
+  background: rgb(207, 207, 207);
+  border: 1px solid gainsboro;
+  box-shadow: 0px 0px 15px 5px rgb(97, 97, 97);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+
+}
+
+.teamselector_teamscontainer {
+  display: flex;
+  overflow: scroll;
+}

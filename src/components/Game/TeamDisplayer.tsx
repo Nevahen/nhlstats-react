@@ -2,7 +2,7 @@ import React from 'react';
 import { ITeam } from '../../_types/ITeam';
 
 interface ITeamDisplayerProps {
-  team: ITeam | null,
+  team: ITeam | undefined ,
 }
 
 export const TeamDisplayer = (props: ITeamDisplayerProps) => (

@@ -9,4 +9,6 @@ export interface GameState {
   homeScore: number,
   awayScore: number,
   gameEvents: IGameEvent[],
+  selectingTeam: boolean,
+  selectingTeamFor: 0 | 1;
 }
