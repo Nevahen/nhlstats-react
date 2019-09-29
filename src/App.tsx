@@ -2,11 +2,12 @@ import './App.css';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { AuthenticationState } from './_types/AuthenticationState';
 import { GameState } from './_types/GameState';
 import { TeamStore } from './_types/TeamStore';
+import { UserStore } from './_types/UserStore';
 import LoginForm from './components/LoginForm';
 import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
@@ -17,6 +18,7 @@ export interface AppState {
   authentication : AuthenticationState;
   newgame: GameState;
   teamStore: TeamStore;
+  userStore: UserStore;
 }
 
 class App extends React.Component<AppState> {
@@ -29,8 +31,6 @@ class App extends React.Component<AppState> {
           <NavBar />
         </header>
         <div className="page">
-        <Link to={'/test'}><h1>NHL STATS</h1></Link>
-
           <Switch>
             <Route path="/login" component={LoginForm} />
             <PrivateRoute path="/test" component={MainPage}/>
@@ -49,6 +49,7 @@ const mapStateToProps = (state: AppState) => ({
   authentication: state.authentication,
   teamStore: state.teamStore,
   newgame: state.newgame,
+  userStore: state.userStore,
 })
 
 export default connect(mapStateToProps)(App);

@@ -22,7 +22,7 @@ const printSelectedTeam = (teams: ITeam[], id:number) => {
 
 const TeamSelectorComponent = (props: TeamSelectorProps) => {
 
-  const [selectedTeam, selectTeam] = useState(3);
+  const [selectedTeam, selectTeam] = useState();
   const selectingFor = useSelector((state: AppState) => state.newgame.selectingTeamFor);
 
   const selectText = () => {

@@ -16,3 +16,25 @@
   display: flex;
   overflow: scroll;
 }
+
+@media screen and (max-width: 768px) {
+
+  .teamselector__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+  }
+
+  .teamselector__container button {
+    width: 100%;
+    margin: 0px;
+    height: 50px;
+    background: greenyellow;
+    border: none;
+  }
+
+
+}
+

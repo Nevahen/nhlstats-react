@@ -10,6 +10,7 @@ import { GameState } from '../_types/GameState';
 import { TeamStore } from '../_types/TeamStore';
 import { AppState } from '../App';
 import PlayerList from '../components/Game/PlayerList';
+import { PlayerSelector } from '../components/Game/PlayerSelector';
 import ScoreDisplayer from '../components/Game/ScoreDisplayer';
 import { TeamDisplayer } from '../components/Game/TeamDisplayer';
 import { TeamSelector } from '../components/Game/TeamSelector';
@@ -23,7 +24,18 @@ interface IGameContainerProps {
   startSelectTeam: Function;
 }
 
-class GameContainer extends React.Component<IGameContainerProps> {
+interface IGameContainerState {
+  step: string;
+}
+
+class GameContainer extends React.Component<IGameContainerProps, IGameContainerState> {
+
+  constructor(props: IGameContainerProps) {
+    super(props);
+    this.state = {
+      step: 'player_select',
+    }
+  }
 
   public componentWillMount() {
     this.props.fetchTeams()
@@ -38,32 +50,35 @@ class GameContainer extends React.Component<IGameContainerProps> {
   }
   
   render() { 
-    return (
-      <div className="game--container">
-          <ScoreDisplayer />
-        <div className="teams--container">
-        <div onClick={() => this.startSelectTeam(0)}>
-          <TeamDisplayer team={this.getTeam(this.props.gamestate.awayTeam)} />
-        </div>
-        <div onClick={() => this.startSelectTeam(1)}>
-          <TeamDisplayer team={this.getTeam(this.props.gamestate.homeTeam)} />
-        </div>
-        </div>
 
-        <div>
-            Players:
-            <PlayerList />
-            Add Player:
-            <input onClick={() => { this.props.addPlayer({name:"osku", id:2})}} type="text" />
+    switch(this.state.step) {
 
+      case 'player_select': {
+        return <PlayerSelector />
+      }
 
-            <button onClick={() => { this.props.gameEvent( { type: GameEventTypes.GOAL, team: 1, player: 1 }) }} >Goal</button>
-            <button onClick={() => { this.props.gameEvent( { type: GameEventTypes.PERIOD }) }}> Next period</button>
-
+      case 'team_select': {
+      return (
+        <div className="game--container">
+            <ScoreDisplayer />
+          <div className="teams--container">
+          <div onClick={() => this.startSelectTeam(0)}>
+            <TeamDisplayer team={this.getTeam(this.props.gamestate.awayTeam)} />
           </div>
-          <TeamSelector/>
-      </div>
-    )
+          <div onClick={() => this.startSelectTeam(1)}>
+            <TeamDisplayer team={this.getTeam(this.props.gamestate.homeTeam)} />
+          </div>
+          </div>
+
+          <div>
+              <button onClick={() => { this.props.gameEvent( { type: GameEventTypes.GOAL, team: 1, player: 1 }) }} >Goal</button>
+              <button onClick={() => { this.props.gameEvent( { type: GameEventTypes.PERIOD }) }}> Next period</button>
+          </div>
+            <TeamSelector/>
+        </div>
+      )
+      }
+    }
   };
 };
 
