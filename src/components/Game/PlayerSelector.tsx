@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { shuffle } from 'lodash';
 
-import { addPlayer, assignPlayer } from '../../_actions/game.actions';
+import { addPlayer, assignPlayer, removePlayer } from '../../_actions/game.actions';
 import { GameState } from '../../_types/GameState';
 import { AppState } from '../../App';
 import { store } from '../../_store/store';
@@ -13,6 +13,7 @@ interface IPlayerSelectorProps {
   addPlayer: Function;
   gameState: GameState;
   assignPlayer: Function;
+  removePlayer: Function;
 }
 
 const PlayerSelectorElement = (props: IPlayerSelectorProps) => {
@@ -34,9 +35,9 @@ const PlayerSelectorElement = (props: IPlayerSelectorProps) => {
       <ul>
         { getAvailablePlayer().map(player => (<li onClick={() => props.addPlayer({...player, team: null})} key={player.id}>{player.username}</li>) )}
       </ul>
-      <TeamPlayers assignPlayer={props.assignPlayer} title="Away" team={0} />
-      <TeamPlayers assignPlayer={props.assignPlayer} title="Unassigned" team={null} />
-      <TeamPlayers assignPlayer={props.assignPlayer} title="Home" team={1} />
+      <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Away" team={0} />
+      <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Unassigned" team={null} />
+      <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Home" team={1} />
 
       <div>
         <button onClick={randomizePlayers}>Randomize Teams</button>
@@ -55,15 +56,16 @@ const TeamPlayers = (props: {
   title: string,
   team: 0 | 1 | null,
   assignPlayer: Function,
+  removePlayer: Function,
 } ) => (
   <div>
     <h3>{props.title}</h3>
     { getTeamPlayers(props.team).map(player => (
      <li key={player.id}>
         { player.username }
-        <button onClick={() => props.assignPlayer(player.id, 0)}>AWAY</button>
-        <button onClick={() => props.assignPlayer(player.id, 1)}>HOME</button>
-        <button>REMOVE</button>
+        <button onClick={ () => props.assignPlayer(player.id, 0) }>AWAY</button>
+        <button onClick={ () => props.assignPlayer(player.id, 1) }>HOME</button>
+        <button onClick={ () => props.removePlayer(player.id) }>REMOVE</button>
       </li> 
     ))}
   </div>
@@ -77,6 +79,7 @@ const stateToProps = (state: AppState ) => ({
 const mapActionToProps = {
   addPlayer: addPlayer,
   assignPlayer: assignPlayer,
+  removePlayer: removePlayer,
 }
 
 connect(stateToProps, mapActionToProps)(TeamPlayers);

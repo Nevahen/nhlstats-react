@@ -63,5 +63,11 @@ export const newgame = (state = initialState, action: any) => {
     }
   }
 
+  if(action.type === 'REMOVE_PLAYER') {
+    return {
+      ...state, players: state.players.filter(player => player.id !== action.id)
+    }
+  }
+
   return state;
 }

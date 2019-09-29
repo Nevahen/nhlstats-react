@@ -17,6 +17,13 @@ export const assignPlayer = (playerId: number, team: number) => {
   }
 }
 
+export const removePlayer = (id: number) => {
+  return {
+    type: 'REMOVE_PLAYER',
+    id,
+  }
+}
+
 export const gameEvent = (event: IGameEvent) => {
   return (dispatch: any, getState: any) => {
     const gameState = getState().newgame as GameState;
