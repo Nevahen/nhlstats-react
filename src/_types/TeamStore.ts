@@ -5,6 +5,6 @@ export interface TeamStore {
 export interface ITeam {
   id: number,
   name: string,
-  shortnam: string,
+  shortname: string,
   league_id: number,
 }
