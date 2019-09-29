@@ -16,6 +16,7 @@ interface IPlayerSelectorProps {
   gameState: GameState;
   assignPlayer: Function;
   removePlayer: Function;
+  nextStep: Function;
 }
 
 const PlayerSelectorElement = (props: IPlayerSelectorProps) => {
@@ -43,7 +44,7 @@ const PlayerSelectorElement = (props: IPlayerSelectorProps) => {
 
       <div>
         <button onClick={randomizePlayers}>Randomize Teams</button>
-        <button>START</button>
+        <button onClick={() => props.nextStep()}>START</button>
       </div>
     </div>
   )

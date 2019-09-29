@@ -28,9 +28,16 @@ export const gameEvent = (event: IGameEvent) => {
   return (dispatch: any, getState: any) => {
     const gameState = getState().newgame as GameState;
 
-    if(event.type === GameEventTypes.PERIOD && gameState.gameStatus < GameStatus.THIRD_PERIOD) {
+    if(event.type === GameEventTypes.PERIOD && gameState.gameStatus < GameStatus.SHOOTOUT) {
       dispatch({
         type: 'NEW_PERIOD',
+      })
+    }
+
+    if(event.type === GameEventTypes.GOAL) {
+      dispatch({
+        type: 'GAME_GOAL',
+        team: event.team,
       })
     }
 

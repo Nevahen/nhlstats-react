@@ -69,5 +69,13 @@ export const newgame = (state = initialState, action: any) => {
     }
   }
 
+  if(action.type === 'GAME_GOAL') {
+    const targetTeam = action.team ? 'homeScore' : 'awayScore';
+    const score = state[targetTeam] + 1;
+    return {
+      ...state, [targetTeam]: score
+    }
+  }
+
   return state;
 }

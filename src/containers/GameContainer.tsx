@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 
 import { addPlayer, gameEvent } from '../_actions/game.actions';
 import { fetchTeams, startSelectTeam } from '../_actions/team.actions';
+import UserActions from '../_actions/user.actions';
+import { store } from '../_store/store';
+import { GameStatus } from '../_types';
 import { GameEventTypes, IGameEvent } from '../_types/GameEvent';
 import { GameState } from '../_types/GameState';
 import { TeamStore } from '../_types/TeamStore';
-import UserActions from '../_actions/user.actions';
 import { AppState } from '../App';
-import PlayerList from '../components/Game/PlayerList';
 import { PlayerSelector } from '../components/Game/PlayerSelector';
 import ScoreDisplayer from '../components/Game/ScoreDisplayer';
 import { TeamDisplayer } from '../components/Game/TeamDisplayer';
@@ -34,8 +35,10 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
 
   constructor(props: IGameContainerProps) {
     super(props);
+
+    const step = props.gamestate.gameStatus > 0 ? 'team_select' : 'player_select';
     this.state = {
-      step: 'player_select',
+      step
     }
   }
 
@@ -49,7 +52,19 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
   }
 
   private startSelectTeam = (selectFor: number) => {
+    if(this.props.gamestate.gameStatus > 0) {
+      return;
+    }
     this.props.startSelectTeam(selectFor);
+  }
+
+  private nextStep = () => {
+    switch(this.state.step) {
+      case 'player_select':
+        this.setState({
+          step: 'team_select',
+        })
+    }
   }
   
   render() { 
@@ -57,7 +72,7 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
     switch(this.state.step) {
 
       case 'player_select': {
-        return <PlayerSelector />
+        return <PlayerSelector nextStep={this.nextStep} />
       }
 
       case 'team_select': {
@@ -67,16 +82,18 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
           <div className="teams--container">
           <div onClick={() => this.startSelectTeam(0)}>
             <TeamDisplayer team={this.getTeam(this.props.gamestate.awayTeam)} />
+            <TeamControls gameEvent={this.props.gameEvent} team={0} />
           </div>
           <div onClick={() => this.startSelectTeam(1)}>
             <TeamDisplayer team={this.getTeam(this.props.gamestate.homeTeam)} />
+            <TeamControls gameEvent={this.props.gameEvent} team={1} />
           </div>
           </div>
 
-          <div>
-              <button onClick={() => { this.props.gameEvent( { type: GameEventTypes.GOAL, team: 1, player: 1 }) }} >Goal</button>
-              <button onClick={() => { this.props.gameEvent( { type: GameEventTypes.PERIOD }) }}> Next period</button>
-          </div>
+          { (this.props.gamestate.gameStatus === 0) 
+            ? <StartControls gameEvent={this.props.gameEvent}/>
+            : <GameControls gameEvent={this.props.gameEvent} /> 
+          }
             <TeamSelector/>
         </div>
       )
@@ -84,6 +101,56 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
     }
   };
 };
+
+const StartControls = (props: {gameEvent: Function}) => {
+  const { homeTeam, awayTeam } = store.getState().newgame;
+  return (
+    <button disabled={ !homeTeam || !awayTeam } 
+      onClick={() => { props.gameEvent( { type: GameEventTypes.PERIOD }) }
+    }> START GAME</button>
+  )
+}
+
+const GameControls = (props: {gameEvent: Function}) => {
+
+  const showEndGame = (): boolean => {
+    const { gameStatus, homeScore, awayScore } = store.getState().newgame;
+    if(gameStatus === 3 && homeScore !== awayScore) {
+      return true;
+    } 
+    return false;
+  }
+
+  const canMoveToNextPeriod = ():boolean => {
+
+    const { gameStatus, homeScore, awayScore } = store.getState().newgame;
+    switch(true) {
+
+      case (gameStatus === GameStatus.THIRD_PERIOD && homeScore == awayScore): {
+        return false
+      }
+
+      default:
+        return true;
+    }
+  }
+
+  return (
+    <div>
+      <button onClick={() => { props.gameEvent( { type: GameEventTypes.GOAL, team: 1, player: 1 }) }} >Goal</button>
+      <button disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { type: GameEventTypes.PERIOD }) }}>Next period</button>
+      { showEndGame() && <button>End game</button>}
+    </div>
+  )
+}
+
+const TeamControls = (props: { gameEvent: Function, team: number }) => {
+  return (
+    <div>
+    <button onClick={() => { props.gameEvent( { type: GameEventTypes.GOAL, team: props.team, player: 1 }) }} >Goal</button>
+    </div>
+  )
+}
 
 const mapActionsToProps = {
   addPlayer: addPlayer,
