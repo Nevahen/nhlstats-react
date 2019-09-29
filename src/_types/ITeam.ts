@@ -1,5 +1,6 @@
 export interface ITeam {
+  id: number,
   name: string,
   shortname: string,
-  league: number,
+  league_id: number,
 }
