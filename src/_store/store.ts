@@ -14,5 +14,5 @@ export const store = createStore(
   applyMiddleware(
     thunkMiddleware,
   ),
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+  (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__() ? (window as any).__REDUX_DEVTOOLS_EXTENSION__ : (a: any) => a
 ));
