@@ -8,6 +8,8 @@ import { GameState } from '../../_types/GameState';
 import { AppState } from '../../App';
 import { store } from '../../_store/store';
 
+import './PlayerSelector.css';
+
 interface IPlayerSelectorProps {
   players: any[];
   addPlayer: Function;
@@ -32,8 +34,8 @@ const PlayerSelectorElement = (props: IPlayerSelectorProps) => {
 
   return (
     <div>
-      <ul>
-        { getAvailablePlayer().map(player => (<li onClick={() => props.addPlayer({...player, team: null})} key={player.id}>{player.username}</li>) )}
+      <ul className="available__list">
+        { getAvailablePlayer().map(player => (<li className="playerlist__item" onClick={() => props.addPlayer({...player, team: null})} key={player.id}>{player.username}</li>) )}
       </ul>
       <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Away" team={0} />
       <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Unassigned" team={null} />
@@ -58,16 +60,20 @@ const TeamPlayers = (props: {
   assignPlayer: Function,
   removePlayer: Function,
 } ) => (
-  <div>
+  <div className="team__container">
     <h3>{props.title}</h3>
+  <ul className="playerlist--column">
     { getTeamPlayers(props.team).map(player => (
-     <li key={player.id}>
-        { player.username }
-        <button onClick={ () => props.assignPlayer(player.id, 0) }>AWAY</button>
-        <button onClick={ () => props.assignPlayer(player.id, 1) }>HOME</button>
-        <button onClick={ () => props.removePlayer(player.id) }>REMOVE</button>
+      <li className="playerlist__item" key={player.id}>
+        <span className="playerlist__name"> { player.username } </span>
+        <div className="playerlist__controls">
+          <button onClick={ () => props.assignPlayer(player.id, 0) }>AWAY</button>
+          <button onClick={ () => props.assignPlayer(player.id, 1) }>HOME</button>
+          <button className="button--red" onClick={ () => props.removePlayer(player.id) }>REMOVE</button>
+        </div>
       </li> 
     ))}
+  </ul>
   </div>
 );
 
