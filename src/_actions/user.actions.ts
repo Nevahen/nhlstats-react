@@ -36,8 +36,26 @@ const logout = () => {
   }
 }
 
+const fetchUsers = () => {
+  return async (dispatch: any) => {
+
+    const request = () => { return { type: 'USERS_FETCH_REQUEST' }}
+    const success = (payload: any) => { return { type: 'USERS_FETCH_SUCCESS', payload}}
+    const failure = () => { return { type: 'USERS_FETCH_FAILURE' }}
+
+    try {
+      dispatch(request());
+      const response = await Axios.get('/users');
+      dispatch(success(response.data));
+    } catch (error) {
+      dispatch(failure);
+    }
+  }
+}
+
 export default {
   login,
   checkLogin,
   logout,
+  fetchUsers,
 }

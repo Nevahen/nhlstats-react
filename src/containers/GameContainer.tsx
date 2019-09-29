@@ -8,6 +8,7 @@ import { fetchTeams, startSelectTeam } from '../_actions/team.actions';
 import { GameEventTypes, IGameEvent } from '../_types/GameEvent';
 import { GameState } from '../_types/GameState';
 import { TeamStore } from '../_types/TeamStore';
+import UserActions from '../_actions/user.actions';
 import { AppState } from '../App';
 import PlayerList from '../components/Game/PlayerList';
 import { PlayerSelector } from '../components/Game/PlayerSelector';
@@ -19,6 +20,7 @@ interface IGameContainerProps {
   addPlayer: Function;
   gameEvent: (event: IGameEvent) => void;
   fetchTeams: Function;
+  fetchUsers: Function;
   gamestate: GameState;
   teams: TeamStore;
   startSelectTeam: Function;
@@ -39,6 +41,7 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
 
   public componentWillMount() {
     this.props.fetchTeams()
+    this.props.fetchUsers();
   }
 
   private getTeam = (id: number | null) => {
@@ -86,6 +89,7 @@ const mapActionsToProps = {
   addPlayer: addPlayer,
   gameEvent: gameEvent,
   fetchTeams: fetchTeams,
+  fetchUsers: UserActions.fetchUsers,
   startSelectTeam: startSelectTeam,
 }
 

@@ -54,5 +54,14 @@ export const newgame = (state = initialState, action: any) => {
     }
   }
 
+  if(action.type === 'ASSIGN_PLAYER') {
+
+    return {
+      ...state, players: state.players.map(player => 
+        player.id === action.playerId ? {...player, team: action.team } : player
+      )
+    }
+  }
+
   return state;
 }

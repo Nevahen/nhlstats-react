@@ -5,5 +5,15 @@ const initialState: UserStore = {
  };
 
 export const userStore = (state = initialState, action: any) => {
-   return state;
+
+   switch(action.type) {
+
+    case 'USERS_FETCH_SUCCESS':
+      return {
+        ...state, users: action.payload
+      }
+
+    default: 
+      return state;
+   }
 }

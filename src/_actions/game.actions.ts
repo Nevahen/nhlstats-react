@@ -9,6 +9,14 @@ export const addPlayer = (player: { name: string, id: number }) => {
   }
 }
 
+export const assignPlayer = (playerId: number, team: number) => {
+  return {
+    type: 'ASSIGN_PLAYER',
+    team,
+    playerId,
+  }
+}
+
 export const gameEvent = (event: IGameEvent) => {
   return (dispatch: any, getState: any) => {
     const gameState = getState().newgame as GameState;
