@@ -3,7 +3,7 @@ import './GameContainer.css';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { addPlayer, gameEvent } from '../_actions/game.actions';
+import { addPlayer, gameEvent, endGame } from '../_actions/game.actions';
 import { fetchTeams, startSelectTeam } from '../_actions/team.actions';
 import UserActions from '../_actions/user.actions';
 import { store } from '../_store/store';
@@ -25,6 +25,7 @@ interface IGameContainerProps {
   gamestate: GameState;
   teams: TeamStore;
   startSelectTeam: Function;
+  endGame: Function;
 }
 
 interface IGameContainerState {
@@ -92,7 +93,7 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
 
           { (this.props.gamestate.gameStatus === 0) 
             ? <StartControls gameEvent={this.props.gameEvent}/>
-            : <GameControls gameEvent={this.props.gameEvent} /> 
+            : <GameControls endGame={this.props.endGame} gameEvent={this.props.gameEvent} /> 
           }
             <TeamSelector/>
         </div>
@@ -111,7 +112,7 @@ const StartControls = (props: {gameEvent: Function}) => {
   )
 }
 
-const GameControls = (props: {gameEvent: Function}) => {
+const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
 
   const showEndGame = (): boolean => {
     const { gameStatus, homeScore, awayScore } = store.getState().newgame;
@@ -141,9 +142,8 @@ const GameControls = (props: {gameEvent: Function}) => {
 
   return (
     <div>
-      <button onClick={() => { props.gameEvent( { type: GameEventTypes.GOAL, team: 1, player: 1 }) }} >Goal</button>
       <button disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { type: GameEventTypes.PERIOD }) }}>Next period</button>
-      { showEndGame() && <button>End game</button>}
+      { showEndGame() && <button onClick={() => props.endGame()}>End game</button>}
     </div>
   )
 }
@@ -162,6 +162,7 @@ const mapActionsToProps = {
   fetchTeams: fetchTeams,
   fetchUsers: UserActions.fetchUsers,
   startSelectTeam: startSelectTeam,
+  endGame: endGame,
 }
 
 const mapStateToProps = (state: AppState ) => ({

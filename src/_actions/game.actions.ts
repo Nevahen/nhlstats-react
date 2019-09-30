@@ -1,6 +1,8 @@
 import { GameStatus } from '../_types/';
 import { GameEventTypes, IGameEvent } from '../_types/GameEvent';
 import { GameState } from '../_types/GameState';
+import { AppState } from '../App';
+import Axios from '../Axios';
 
 export const addPlayer = (player: { name: string, id: number }) => {
   return {
@@ -51,7 +53,48 @@ export const gameEvent = (event: IGameEvent) => {
 }
 
 export const endGame = () => {
-  return {
-    type: 'GAME_END',
+  return async (dispatch: any, getState: () => AppState) => {
+
+    const { 
+      players,
+      awayScore,
+      awayTeam,
+      homeScore,
+      homeTeam,
+      gameEvents
+    } = getState().newgame;
+
+    const playersModified = players.map(player => {
+      return {...player, ["#dbRef"]: player.id }
+    })
+
+    const events = gameEvents.map(event => {
+      return { ...event, player_id: event.player }
+    });
+
+    const payload = {
+      scoreAway: awayScore,
+      awayTeam,
+      scoreHome: homeScore,
+      homeTeam,
+      events,
+      players: playersModified,
+    }
+
+
+
+    console.log(payload);
+
+    try {
+    await Axios.post('/matches', payload);
+    } catch (error) {
+      console.log(error);
+    }
+
+
+    dispatch({
+      type: 'GAME_END'
+    });
+
   }
 }
