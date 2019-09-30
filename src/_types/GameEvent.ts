@@ -7,7 +7,7 @@ export enum GameEventTypes {
 
 export interface IGameEvent {
   type: GameEventTypes,
-  player?: number,
+  player_id?: number,
   team?: number,
   period?: number,
 }

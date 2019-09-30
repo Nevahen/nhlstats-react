@@ -6,8 +6,8 @@ export interface GameState {
   players: any[],
   homeTeam: number | null
   awayTeam: number | null,
-  homeScore: number,
-  awayScore: number,
+  scoreHome: number,
+  scoreAway: number,
   gameEvents: IGameEvent[],
   selectingTeam: boolean,
   selectingTeamFor: 0 | 1;

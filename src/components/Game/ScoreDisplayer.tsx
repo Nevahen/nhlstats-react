@@ -33,8 +33,8 @@ const ScoreDisplayer = (props: ScoreDisplayerProps) => (
 
 const mapStateToProps = (state: AppState) => ({
   period: state.newgame.gameStatus,
-  awayScore: state.newgame.awayScore,
-  homeScore: state.newgame.homeScore,
+  awayScore: state.newgame.scoreAway,
+  homeScore: state.newgame.scoreHome,
 })
 
 export default connect(mapStateToProps)(ScoreDisplayer);

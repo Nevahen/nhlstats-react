@@ -57,9 +57,9 @@ export const endGame = () => {
 
     const { 
       players,
-      awayScore,
+      scoreAway,
       awayTeam,
-      homeScore,
+      scoreHome,
       homeTeam,
       gameEvents
     } = getState().newgame;
@@ -68,29 +68,21 @@ export const endGame = () => {
       return {...player, ["#dbRef"]: player.id }
     })
 
-    const events = gameEvents.map(event => {
-      return { ...event, player_id: event.player }
-    });
-
     const payload = {
-      scoreAway: awayScore,
+      scoreAway,
       awayTeam,
-      scoreHome: homeScore,
+      scoreHome,
       homeTeam,
-      events,
+      events: gameEvents,
       players: playersModified,
+      winnerTeam: scoreHome > scoreAway ? 1 : 0,
     }
-
-
-
-    console.log(payload);
 
     try {
     await Axios.post('/matches', payload);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
-
 
     dispatch({
       type: 'GAME_END'

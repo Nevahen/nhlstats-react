@@ -115,8 +115,8 @@ const StartControls = (props: {gameEvent: Function}) => {
 const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
 
   const showEndGame = (): boolean => {
-    const { gameStatus, homeScore, awayScore } = store.getState().newgame;
-    if(gameStatus >= GameStatus.THIRD_PERIOD && homeScore !== awayScore) {
+    const { gameStatus, scoreHome, scoreAway } = store.getState().newgame;
+    if(gameStatus >= GameStatus.THIRD_PERIOD && scoreHome !== scoreAway) {
       return true;
     } 
 
@@ -125,10 +125,10 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
 
   const canMoveToNextPeriod = ():boolean => {
 
-    const { gameStatus, homeScore, awayScore } = store.getState().newgame;
+    const { gameStatus, scoreHome, scoreAway } = store.getState().newgame;
     switch(true) {
 
-      case ((gameStatus === GameStatus.THIRD_PERIOD || gameStatus === GameStatus.OVERTIME) && homeScore == awayScore): {
+      case ((gameStatus === GameStatus.THIRD_PERIOD || gameStatus === GameStatus.OVERTIME) && scoreHome == scoreAway): {
         return true;
       }
 
@@ -151,7 +151,7 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
 const TeamControls = (props: { gameEvent: Function, team: number }) => {
   return (
     <div>
-    <button onClick={() => { props.gameEvent( { type: GameEventTypes.GOAL, team: props.team, player: 1 }) }} >Goal</button>
+    <button onClick={() => { props.gameEvent( { type: GameEventTypes.GOAL, team: props.team, player_id: 1 }) }} >Goal</button>
     </div>
   )
 }

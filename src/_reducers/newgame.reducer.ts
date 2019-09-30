@@ -6,8 +6,8 @@ const initialState: GameState = {
   players: [],
   homeTeam: null,
   awayTeam: null,
-  homeScore: 0,
-  awayScore: 0,
+  scoreHome: 0,
+  scoreAway: 0,
   gameEvents: [],
   selectingTeam: false,
   selectingTeamFor: 0,
@@ -70,7 +70,7 @@ export const newgame = (state = initialState, action: any) => {
   }
 
   if(action.type === 'GAME_GOAL') {
-    const targetTeam = action.team ? 'homeScore' : 'awayScore';
+    const targetTeam = action.team ? 'scoreHome' : 'scoreAway';
     const score = state[targetTeam] + 1;
     return {
       ...state, [targetTeam]: score
