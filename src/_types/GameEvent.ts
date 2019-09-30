@@ -1,12 +1,12 @@
 
 export enum GameEventTypes {
-  GOAL = 'goal',
-  PENALTY = 'penalty',
-  PERIOD = 'period',
+  PERIOD = 0,
+  GOAL = 1,
+  PENALTY = 2,
 }
 
 export interface IGameEvent {
-  type: GameEventTypes,
+  event_type: GameEventTypes,
   player_id?: number,
   team?: number,
   period?: number,

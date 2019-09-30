@@ -103,11 +103,11 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
   };
 };
 
-const StartControls = (props: {gameEvent: Function}) => {
+const StartControls = (props: { gameEvent: (arg: IGameEvent) => void }) => {
   const { homeTeam, awayTeam } = store.getState().newgame;
   return (
     <button disabled={ !homeTeam || !awayTeam } 
-      onClick={() => { props.gameEvent( { type: GameEventTypes.PERIOD }) }
+      onClick={() => { props.gameEvent( { event_type: GameEventTypes.PERIOD }) }
     }> START GAME</button>
   )
 }
@@ -142,7 +142,7 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
 
   return (
     <div>
-      <button disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { type: GameEventTypes.PERIOD }) }}>Next period</button>
+      <button disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { event_type: GameEventTypes.PERIOD }) }}>Next period</button>
       { showEndGame() && <button onClick={() => props.endGame()}>End game</button>}
     </div>
   )
@@ -151,7 +151,7 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
 const TeamControls = (props: { gameEvent: Function, team: number }) => {
   return (
     <div>
-    <button onClick={() => { props.gameEvent( { type: GameEventTypes.GOAL, team: props.team, player_id: 1 }) }} >Goal</button>
+    <button onClick={() => { props.gameEvent( { event_type: GameEventTypes.GOAL, team: props.team, player_id: 1 }) }} >Goal</button>
     </div>
   )
 }
