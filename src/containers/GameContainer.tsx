@@ -128,7 +128,7 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
     const { gameStatus, scoreHome, scoreAway } = store.getState().newgame;
     switch(true) {
 
-      case ((gameStatus === GameStatus.THIRD_PERIOD || gameStatus === GameStatus.OVERTIME) && scoreHome == scoreAway): {
+      case ((gameStatus === GameStatus.THIRD_PERIOD || gameStatus === GameStatus.OVERTIME) && scoreHome === scoreAway): {
         return true;
       }
 

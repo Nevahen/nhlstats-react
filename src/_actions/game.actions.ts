@@ -65,7 +65,7 @@ export const endGame = () => {
     } = getState().newgame;
 
     const playersModified = players.map(player => {
-      return {...player, ["#dbRef"]: player.id }
+      return {...player, "#dbRef": player.id }
     })
 
     const payload = {
