@@ -115,9 +115,10 @@ const GameControls = (props: {gameEvent: Function}) => {
 
   const showEndGame = (): boolean => {
     const { gameStatus, homeScore, awayScore } = store.getState().newgame;
-    if(gameStatus === 3 && homeScore !== awayScore) {
+    if(gameStatus >= GameStatus.THIRD_PERIOD && homeScore !== awayScore) {
       return true;
     } 
+
     return false;
   }
 
@@ -126,12 +127,15 @@ const GameControls = (props: {gameEvent: Function}) => {
     const { gameStatus, homeScore, awayScore } = store.getState().newgame;
     switch(true) {
 
-      case (gameStatus === GameStatus.THIRD_PERIOD && homeScore == awayScore): {
-        return false
+      case ((gameStatus === GameStatus.THIRD_PERIOD || gameStatus === GameStatus.OVERTIME) && homeScore == awayScore): {
+        return true;
       }
 
-      default:
+      case gameStatus < GameStatus.THIRD_PERIOD:
         return true;
+
+      default:
+        return false;
     }
   }
 
