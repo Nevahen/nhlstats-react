@@ -11,7 +11,8 @@ const guestLinks = [
 const userLinks = [
   { title: 'Home', to: '/', exact: true },
   { title: 'Matches', to: '/matches', exact: false },
-  { title: 'New Game', to: '/game', exact: false }
+  { title: 'New Game', to: '/game', exact: false },
+  { title: 'Users', to: '/users', exact: false }
 ]
 
 interface INavBarProps {

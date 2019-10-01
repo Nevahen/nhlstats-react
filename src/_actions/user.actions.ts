@@ -53,9 +53,34 @@ const fetchUsers = () => {
   }
 }
 
+const registerUser = (user: {username: string, password: string }) => {
+  const { password, username} = user;
+  return async (dispatch: any) => {
+    dispatch({
+      type: "REGISTER_USER_REQUEST",
+    });
+
+    try {
+      const respone = await Axios.post('/users', {
+        password,
+        username,
+      });
+
+      dispatch({
+        type: "REGISTER_USER_SUCCESS",
+        payload: respone.data,
+      })
+    } catch (error) {
+
+    }
+
+  }
+}
+
 export default {
   login,
   checkLogin,
   logout,
   fetchUsers,
+  registerUser,
 }

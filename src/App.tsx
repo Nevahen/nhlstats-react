@@ -13,6 +13,7 @@ import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
 import PrivateRoute from './components/PrivateRoute';
 import GameContainer from './containers/GameContainer';
+import UsersContainer from './containers/UsersContainer';
 
 export interface AppState {
   authentication : AuthenticationState;
@@ -35,6 +36,7 @@ class App extends React.Component<AppState> {
             <Route path="/login" component={LoginForm} />
             <PrivateRoute path="/test" component={MainPage}/>
             <PrivateRoute path="/game" component={GameContainer} />
+            <PrivateRoute path="/users" component={UsersContainer} />
             <PrivateRoute component={() => <h2>no found man</h2>} />
             
           </Switch>

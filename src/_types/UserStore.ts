@@ -1,8 +1,9 @@
 export interface UserStore {
   users: IUser[];
+  fetching: boolean;
 }
 
 export interface IUser {
   id: number;
-  name: string;
+  username: string;
 }
