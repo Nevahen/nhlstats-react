@@ -91,11 +91,9 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
           </div>
           </div>
 
-          { (this.props.gamestate.gameStatus === 0) 
-            ? <StartControls gameEvent={this.props.gameEvent}/>
-            : <GameControls endGame={this.props.endGame} gameEvent={this.props.gameEvent} /> 
-          }
-            <TeamSelector/>
+          { this.props.gamestate.gameStatus === GameStatus.INIT && <StartControls gameEvent={this.props.gameEvent}/> }
+           <GameControls endGame={this.props.endGame} gameEvent={this.props.gameEvent} />                   
+           <TeamSelector/>
         </div>
       )
       }
@@ -114,8 +112,9 @@ const StartControls = (props: { gameEvent: (arg: IGameEvent) => void }) => {
 
 const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
 
+  const { gameStatus, scoreHome, scoreAway } = store.getState().newgame;
+
   const showEndGame = (): boolean => {
-    const { gameStatus, scoreHome, scoreAway } = store.getState().newgame;
     if(gameStatus >= GameStatus.THIRD_PERIOD && scoreHome !== scoreAway) {
       return true;
     } 
@@ -125,7 +124,6 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
 
   const canMoveToNextPeriod = ():boolean => {
 
-    const { gameStatus, scoreHome, scoreAway } = store.getState().newgame;
     switch(true) {
 
       case ((gameStatus === GameStatus.THIRD_PERIOD || gameStatus === GameStatus.OVERTIME) && scoreHome === scoreAway): {
@@ -140,20 +138,31 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
     }
   }
 
-  return (
-    <div>
-      <button disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { event_type: GameEventTypes.PERIOD }) }}>Next period</button>
-      { showEndGame() && <button onClick={() => props.endGame()}>End game</button>}
-    </div>
-  )
+  if(gameStatus >= GameStatus.FIRST_PERIOD && gameStatus <= GameStatus.SHOOTOUT) {
+    return (
+      <div>
+        <button disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { event_type: GameEventTypes.PERIOD }) }}>Next period</button>
+        { showEndGame() && <button onClick={() => props.endGame()}>End game</button>}
+      </div>
+    )
+  } else {
+    return null
+  }  
 }
 
 const TeamControls = (props: { gameEvent: Function, team: number }) => {
-  return (
-    <div>
-    <button onClick={() => { props.gameEvent( { event_type: GameEventTypes.GOAL, team: props.team, player_id: 1 }) }} >Goal</button>
-    </div>
-  )
+
+  const { gameStatus } = store.getState().newgame;
+
+  if(gameStatus >= GameStatus.FIRST_PERIOD && gameStatus <= GameStatus.SHOOTOUT) {
+    return (
+      <div>
+      <button onClick={() => { props.gameEvent( { event_type: GameEventTypes.GOAL, team: props.team, player_id: 1 }) }} >Goal</button>
+      </div>
+    )
+  } else {
+    return null;
+  }
 }
 
 const mapActionsToProps = {
