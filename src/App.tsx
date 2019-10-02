@@ -14,6 +14,7 @@ import NavBar from './components/NavBar';
 import PrivateRoute from './components/PrivateRoute';
 import GameContainer from './containers/GameContainer';
 import UsersContainer from './containers/UsersContainer';
+import { Layout } from 'antd';
 
 export interface AppState {
   authentication : AuthenticationState;
@@ -26,12 +27,12 @@ class App extends React.Component<AppState> {
 
   render() {
   return (
-    <div className="App">
+    <Layout>
       <Router>
-        <header className="App-header">
+        <Layout.Header style={{padding: 0}}>
           <NavBar />
-        </header>
-        <div className="page">
+        </Layout.Header >
+        <Layout.Content style={{ margin:'auto', marginTop: 50, width: 600, maxWidth: '100vw', minHeight: '93vh'}}>
           <Switch>
             <Route path="/login" component={LoginForm} />
             <PrivateRoute path="/test" component={MainPage}/>
@@ -40,9 +41,9 @@ class App extends React.Component<AppState> {
             <PrivateRoute component={() => <h2>no found man</h2>} />
             
           </Switch>
-        </div>
+        </Layout.Content>  
       </Router>
-    </div>
+    </Layout>
     );
   }
 }

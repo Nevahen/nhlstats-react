@@ -1,5 +1,3 @@
-import './GameContainer.css';
-
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -16,6 +14,8 @@ import { PlayerSelector } from '../components/Game/PlayerSelector';
 import ScoreDisplayer from '../components/Game/ScoreDisplayer';
 import { TeamDisplayer } from '../components/Game/TeamDisplayer';
 import { TeamSelector } from '../components/Game/TeamSelector';
+import { Button, Row, Col } from 'antd';
+
 
 interface IGameContainerProps {
   addPlayer: Function;
@@ -79,17 +79,24 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
       case 'team_select': {
       return (
         <div className="game--container">
+          <Row type="flex" justify="center">
             <ScoreDisplayer />
-          <div className="teams--container">
-          <div onClick={() => this.startSelectTeam(0)}>
-            <TeamDisplayer team={this.getTeam(this.props.gamestate.awayTeam)} />
-            <TeamControls gameEvent={this.props.gameEvent} team={0} />
-          </div>
-          <div onClick={() => this.startSelectTeam(1)}>
-            <TeamDisplayer team={this.getTeam(this.props.gamestate.homeTeam)} />
-            <TeamControls gameEvent={this.props.gameEvent} team={1} />
-          </div>
-          </div>
+          </Row>
+        
+          <Row type="flex" justify="center">
+            <Col span={12} onClick={() => this.startSelectTeam(0)}>
+              <TeamDisplayer team={this.getTeam(this.props.gamestate.awayTeam)} />
+              <Row type="flex" justify="center">
+                <TeamControls gameEvent={this.props.gameEvent} team={0} />
+              </Row>
+            </Col>
+            <Col span={12} onClick={() => this.startSelectTeam(1)}>
+              <TeamDisplayer team={this.getTeam(this.props.gamestate.homeTeam)} />
+              <Row type="flex" justify="center">
+                <TeamControls gameEvent={this.props.gameEvent} team={1} />
+              </Row>
+            </Col>
+          </Row>
 
           { this.props.gamestate.gameStatus === GameStatus.INIT && <StartControls gameEvent={this.props.gameEvent}/> }
            <GameControls endGame={this.props.endGame} gameEvent={this.props.gameEvent} />                   
@@ -104,9 +111,9 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
 const StartControls = (props: { gameEvent: (arg: IGameEvent) => void }) => {
   const { homeTeam, awayTeam } = store.getState().newgame;
   return (
-    <button disabled={ !homeTeam || !awayTeam } 
+    <Button disabled={ !homeTeam || !awayTeam } 
       onClick={() => { props.gameEvent( { event_type: GameEventTypes.PERIOD }) }
-    }> START GAME</button>
+    }> START GAME</Button>
   )
 }
 
@@ -141,8 +148,8 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
   if(gameStatus >= GameStatus.FIRST_PERIOD && gameStatus <= GameStatus.SHOOTOUT) {
     return (
       <div>
-        <button disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { event_type: GameEventTypes.PERIOD }) }}>Next period</button>
-        { showEndGame() && <button onClick={() => props.endGame()}>End game</button>}
+        <Button disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { event_type: GameEventTypes.PERIOD }) }}>Next period</Button>
+        { showEndGame() && <Button onClick={() => props.endGame()}>End game</Button>}
       </div>
     )
   } else {
@@ -157,7 +164,9 @@ const TeamControls = (props: { gameEvent: Function, team: number }) => {
   if(gameStatus >= GameStatus.FIRST_PERIOD && gameStatus <= GameStatus.SHOOTOUT) {
     return (
       <div>
-      <button onClick={() => { props.gameEvent( { event_type: GameEventTypes.GOAL, team: props.team, player_id: 1 }) }} >Goal</button>
+      <Button onClick={() => { props.gameEvent( { event_type: GameEventTypes.GOAL, team: props.team, player_id: 1 }) }} >Goal</Button>
+      <Button /* onClick={() => { props.gameEvent( { event_type: GameEventTypes.GOAL, team: props.team, player_id: 1 }) }} */>Penalty</Button>
+
       </div>
     )
   } else {

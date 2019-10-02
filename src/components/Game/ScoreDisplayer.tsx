@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { AppState } from '../../App';
+import { Col } from 'antd';
 
 interface ScoreDisplayerProps {
   period: number,
@@ -25,10 +26,10 @@ const periodName = (period: number) => {
 }
 
 const ScoreDisplayer = (props: ScoreDisplayerProps) => (
-  <div className="score-displayer">
+  <Col>
     <h2> { periodName(props.period) } </h2>
-    { props.period > 0 && <h2> { props.awayScore } - { props.homeScore }</h2> }
-  </div>
+    { props.period > 0 && <div><h2> { props.awayScore } - { props.homeScore }</h2></div> }
+  </Col>
 );
 
 const mapStateToProps = (state: AppState) => ({

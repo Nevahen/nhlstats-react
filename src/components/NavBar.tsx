@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import userActions from '../_actions/user.actions';
+import { Menu } from 'antd';
 
 const guestLinks = [
   { title: 'Home', to: '/', exact: true },
@@ -23,23 +24,23 @@ interface INavBarProps {
 const NavBar = (props: INavBarProps) => {
 
   return (
-    <nav>
-      <ul>
+    
+      <Menu theme="dark" mode="horizontal">
   
       { props.loggedIn  
         
         ? userLinks.map(value => (
-           <li key={value.to} ><NavLink exact={value.exact} activeClassName="nav-active" to={value.to}>{value.title}</NavLink></li>
+           <Menu.Item key={value.to} ><NavLink exact={value.exact} activeClassName="nav-active" to={value.to}>{value.title}</NavLink></Menu.Item>
         ))      
         : guestLinks.map(value => (
-            <li key={value.to} ><NavLink exact={value.exact} activeClassName="nav-active" to={value.to}>{value.title}</NavLink></li>
+            <Menu.Item key={value.to} ><NavLink exact={value.exact} activeClassName="nav-active" to={value.to}>{value.title}</NavLink></Menu.Item>
           ))
         }
   
   
-      </ul>
-      { props.loggedIn && <span onClick={() => props.logout()}>Logout</span>}
-    </nav>
+      
+      { props.loggedIn && <Menu.Item onClick={() => props.logout()}>Logout</Menu.Item>}
+      </Menu>
   )
 
 }

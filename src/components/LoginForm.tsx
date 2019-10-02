@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import  userActions from '../_actions/user.actions';
 import { Redirect } from 'react-router';
+import { Input, Button } from 'antd';
 
 interface LoginFormProps {
   errors? : string;
@@ -44,9 +45,9 @@ class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
         <form onSubmit={this.handleSubmit}>
           { this.props.errors && <span className="text-warning">{this.props.errors}</span> }
           { this.props.loggedIn && <Redirect to="/test" />}
-          <input onChange={this.onChange} placeholder="Username" name="username"/>
-          <input onChange={this.onChange} placeholder="Password" type="password" name="password" id="password"/>
-          <input type="submit" className="login-btn" value="Login"/>
+          <Input onChange={this.onChange} placeholder="Username" name="username"/>
+          <Input.Password onChange={this.onChange} placeholder="Password" type="password" name="password" id="password"/>
+          <Button htmlType="submit"> Login </Button>
         </form>
       )
     } else {

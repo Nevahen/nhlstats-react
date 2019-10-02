@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import userActions from '../../_actions/user.actions';
 import { connect } from 'react-redux';
+import { Input, Button } from 'antd';
 
 export const NewUserForm = (props: { newUser: Function }) => {
 
@@ -20,9 +21,9 @@ export const NewUserForm = (props: { newUser: Function }) => {
   return (
     <div>
       <h3>New user</h3>
-      <input name="username" onChange={handleInputChange} />
-      <input name="password" onChange={handleInputChange} type="password" />
-      <button onClick={handleSubmit}>Add</button>
+      <Input name="username" onChange={handleInputChange} />
+      <Input name="password" onChange={handleInputChange} type="password" />
+      <Button onClick={handleSubmit}>Add</Button>
     </div>
   )
 }

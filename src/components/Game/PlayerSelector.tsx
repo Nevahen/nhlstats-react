@@ -1,14 +1,15 @@
+import { Layout, Typography, List } from 'antd';
+import { shuffle } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { shuffle } from 'lodash';
-
 import { addPlayer, assignPlayer, removePlayer } from '../../_actions/game.actions';
+import { store } from '../../_store/store';
 import { GameState } from '../../_types/GameState';
 import { AppState } from '../../App';
-import { store } from '../../_store/store';
+import { Button } from 'antd';
 
-import './PlayerSelector.css';
+const { Title } = Typography;
 
 interface IPlayerSelectorProps {
   players: any[];
@@ -36,7 +37,7 @@ const PlayerSelectorElement = (props: IPlayerSelectorProps) => {
   return (
     <div>
       <ul className="available__list">
-        { getAvailablePlayer().map(player => (<li className="playerlist__item" onClick={() => props.addPlayer({...player, team: null})} key={player.id}>{player.username}</li>) )}
+        { getAvailablePlayer().map(player => (<Button className="playerlist__item" onClick={() => props.addPlayer({...player, team: null})} key={player.id}>{player.username}</Button>) )}
       </ul>
       <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Away" team={0} />
       <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Unassigned" team={null} />
@@ -61,21 +62,26 @@ const TeamPlayers = (props: {
   assignPlayer: Function,
   removePlayer: Function,
 } ) => (
-  <div className="team__container">
-    <h3>{props.title}</h3>
-  <ul className="playerlist--column">
-    { getTeamPlayers(props.team).map(player => (
-      <li className="playerlist__item" key={player.id}>
-        <span className="playerlist__name"> { player.username } </span>
-        <div className="playerlist__controls">
-          <button onClick={ () => props.assignPlayer(player.id, 0) }>AWAY</button>
-          <button onClick={ () => props.assignPlayer(player.id, 1) }>HOME</button>
-          <button className="button--red" onClick={ () => props.removePlayer(player.id) }>REMOVE</button>
-        </div>
-      </li> 
-    ))}
-  </ul>
-  </div>
+  <Layout>
+      <Layout.Content>
+        <List       
+          bordered 
+          header={<div>{props.title}</div>}
+          dataSource={getTeamPlayers(props.team)}
+          locale={{ emptyText: ' '}}
+          renderItem={player => (
+            <List.Item style={{justifyContent: 'space-between'}}>
+              <span className="playerlist__name"> { player.username } </span>
+              <div>
+                <Button onClick={ () => props.assignPlayer(player.id, 0) }>AWAY</Button>
+                <Button onClick={ () => props.assignPlayer(player.id, 1) }>HOME</Button>
+                <Button type="danger" onClick={ () => props.removePlayer(player.id) }>REMOVE</Button>
+              </div>
+            </List.Item> 
+          )
+        }/>
+      </Layout.Content>
+  </Layout>
 );
 
 const stateToProps = (state: AppState ) => ({
