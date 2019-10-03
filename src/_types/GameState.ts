@@ -11,4 +11,6 @@ export interface GameState {
   gameEvents: IGameEvent[],
   selectingTeam: boolean,
   selectingTeamFor: 0 | 1;
+  playerSelectEvent: null | IGameEvent,
+  showPlayerSelect: boolean,
 }

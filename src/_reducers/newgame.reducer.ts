@@ -11,6 +11,8 @@ const initialState: GameState = {
   gameEvents: [],
   selectingTeam: false,
   selectingTeamFor: 0,
+  playerSelectEvent: null,
+  showPlayerSelect: false,
  };
 
 export const newgame = (state = initialState, action: any) => {
@@ -25,7 +27,13 @@ export const newgame = (state = initialState, action: any) => {
   if(action.type === 'GAME_EVENT') {
     const gameEvents = [...state.gameEvents, action.event]
     return {
-      ...state, gameEvents
+      ...state, gameEvents, playerSelectEvent: null, showPlayerSelect: false,
+    }
+  }
+
+  if(action.type === 'PLAYER_SELECT') {
+    return {
+      ...state, playerSelectEvent: action.event, showPlayerSelect: true,
     }
   }
 

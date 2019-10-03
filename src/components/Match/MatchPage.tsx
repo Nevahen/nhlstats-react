@@ -52,7 +52,7 @@ export class MatchPageComponent extends React.Component<OwnProps & RouteComponen
               <Col span={8}>
               <TeamDisplayer team={match._awayTeam}/>
               </Col>
-              <Col span={4}>
+              <Col className="text-center" span={4}>
                 {match.scoreAway} - {match.scoreHome}
               </Col>
               <Col span={8}>

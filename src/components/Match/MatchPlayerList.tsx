@@ -1,6 +1,7 @@
 import React from 'react';
 import { IUser } from '../../_types/UserStore';
 import { List } from 'antd';
+import { mapTeamPlayers } from '../../utils/TeamUtils';
 
 interface Props {
   players: IUser[], 
@@ -8,14 +9,8 @@ interface Props {
 }
 
 
-const mapTeamPlayers = (data: Props) => {
-  return data.players.filter((player: any) => {
-      return player.team === data.team;
-    })
-}
-
 export const MatchPlayerList = (props: Props) => (
-  <List dataSource={mapTeamPlayers(props)}
+  <List dataSource={mapTeamPlayers(props.players, props.team)}
     renderItem={item => (
       <List.Item>{item.username}</List.Item>
     )}

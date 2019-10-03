@@ -52,6 +52,13 @@ export const gameEvent = (event: IGameEvent) => {
   }
 }
 
+export const playerSelect = (event: IGameEvent) => {
+  return {
+    type: "PLAYER_SELECT",
+    event,
+  }
+}
+
 export const endGame = () => {
   return async (dispatch: any, getState: () => AppState) => {
 

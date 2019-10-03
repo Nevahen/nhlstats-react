@@ -21,3 +21,7 @@ input {
   background: whitesmoke;
   font-size: 16px;
 }
+
+.text-center {
+  text-align: center;
+}

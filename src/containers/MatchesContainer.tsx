@@ -21,7 +21,10 @@ componentWillMount() {
 }
 
 render = () => (
-    <List loading={ this.props.matchStore.fetching } 
+    <List 
+    bordered
+    itemLayout="horizontal"
+    loading={ this.props.matchStore.fetching } 
     dataSource={ this.props.matchStore.matchList } 
     renderItem={match => (
       <Link to={`/matches/${match.id}`}>

@@ -2,7 +2,8 @@
 export enum GameEventTypes {
   PERIOD = 0,
   GOAL = 1,
-  PENALTY = 2,
+  MINOR_PENALTY = 2,
+  MAJOR_PENALTY = 3,
 }
 
 export interface IGameEvent {

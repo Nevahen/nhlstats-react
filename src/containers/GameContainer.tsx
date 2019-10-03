@@ -1,7 +1,8 @@
+import { Button, Col, Modal, notification, Row } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { addPlayer, gameEvent, endGame } from '../_actions/game.actions';
+import { addPlayer, endGame, gameEvent, playerSelect } from '../_actions/game.actions';
 import { fetchTeams, startSelectTeam } from '../_actions/team.actions';
 import UserActions from '../_actions/user.actions';
 import { store } from '../_store/store';
@@ -14,8 +15,7 @@ import { PlayerSelector } from '../components/Game/PlayerSelector';
 import ScoreDisplayer from '../components/Game/ScoreDisplayer';
 import { TeamDisplayer } from '../components/Game/TeamDisplayer';
 import { TeamSelector } from '../components/Game/TeamSelector';
-import { Button, Row, Col } from 'antd';
-
+import { mapTeamPlayers } from '../utils/TeamUtils';
 
 interface IGameContainerProps {
   addPlayer: Function;
@@ -26,6 +26,7 @@ interface IGameContainerProps {
   teams: TeamStore;
   startSelectTeam: Function;
   endGame: Function;
+  playerSelect: Function;
 }
 
 interface IGameContainerState {
@@ -87,17 +88,25 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
             <Col span={12} onClick={() => this.startSelectTeam(0)}>
               <TeamDisplayer team={this.getTeam(this.props.gamestate.awayTeam)} />
               <Row type="flex" justify="center">
-                <TeamControls gameEvent={this.props.gameEvent} team={0} />
+                <TeamControls playerSelect={this.props.playerSelect} gameEvent={this.props.gameEvent} team={0} />
               </Row>
             </Col>
             <Col span={12} onClick={() => this.startSelectTeam(1)}>
               <TeamDisplayer team={this.getTeam(this.props.gamestate.homeTeam)} />
               <Row type="flex" justify="center">
-                <TeamControls gameEvent={this.props.gameEvent} team={1} />
+                <TeamControls playerSelect={this.props.playerSelect} gameEvent={this.props.gameEvent} team={1} />
               </Row>
             </Col>
           </Row>
 
+          <Modal visible={this.props.gamestate.showPlayerSelect}>
+
+          { this.props.gamestate.playerSelectEvent && mapTeamPlayers(this.props.gamestate.players, this.props.gamestate.playerSelectEvent!.team as 0 | 1).map(player => (
+            <Button onClick={() => this.props.gameEvent({ ...this.props.gamestate.playerSelectEvent!, player_id: player.id })}>{player.username}</Button>
+          )) }
+
+
+          </Modal>
           { this.props.gamestate.gameStatus === GameStatus.INIT && <StartControls gameEvent={this.props.gameEvent}/> }
            <GameControls endGame={this.props.endGame} gameEvent={this.props.gameEvent} />                   
            <TeamSelector/>
@@ -144,7 +153,7 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
         return false;
     }
   }
-
+  
   if(gameStatus >= GameStatus.FIRST_PERIOD && gameStatus <= GameStatus.SHOOTOUT) {
     return (
       <div>
@@ -157,15 +166,33 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
   }  
 }
 
-const TeamControls = (props: { gameEvent: Function, team: number }) => {
+const TeamControls = (props: { gameEvent: Function, team: number, playerSelect: Function }) => {
 
   const { gameStatus } = store.getState().newgame;
+
+  const handleButtonClick = (event: IGameEvent) => {
+
+    const players = mapTeamPlayers(store.getState().newgame.players, event.team as 0 | 1);
+
+    if(players.length === 1) {
+      props.gameEvent({ ...event, player: players[0].id })
+    } else {
+      props.playerSelect(event);
+    }
+
+    notification.open({
+      message: 'ok',
+    });
+
+    // props.gameEvent(event);
+  }
 
   if(gameStatus >= GameStatus.FIRST_PERIOD && gameStatus <= GameStatus.SHOOTOUT) {
     return (
       <div>
-      <Button onClick={() => { props.gameEvent( { event_type: GameEventTypes.GOAL, team: props.team, player_id: 1 }) }} >Goal</Button>
-      <Button /* onClick={() => { props.gameEvent( { event_type: GameEventTypes.GOAL, team: props.team, player_id: 1 }) }} */>Penalty</Button>
+      <Button onClick={() => handleButtonClick({ event_type: GameEventTypes.GOAL, team: props.team })}>Goal</Button>
+      <Button onClick={() => handleButtonClick({ event_type: GameEventTypes.MINOR_PENALTY, team: props.team })} >Minor Penalty</Button>
+      <Button onClick={() => handleButtonClick({ event_type: GameEventTypes.MAJOR_PENALTY, team: props.team })} >Major Penalty</Button>
 
       </div>
     )
@@ -174,6 +201,7 @@ const TeamControls = (props: { gameEvent: Function, team: number }) => {
   }
 }
 
+
 const mapActionsToProps = {
   addPlayer: addPlayer,
   gameEvent: gameEvent,
@@ -181,6 +209,7 @@ const mapActionsToProps = {
   fetchUsers: UserActions.fetchUsers,
   startSelectTeam: startSelectTeam,
   endGame: endGame,
+  playerSelect: playerSelect,
 }
 
 const mapStateToProps = (state: AppState ) => ({
