@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import { authentication } from './authentication.reducer';
+import { matches } from './matches.reducer';
 import { newgame } from './newgame.reducer';
 import { teamStore } from './teams.reducer';
 import { userStore } from './users.reducer';
@@ -10,4 +11,5 @@ export const rootReducer = combineReducers({
   authentication,
   newgame,
   userStore,
+  matchStore: matches,
 });
