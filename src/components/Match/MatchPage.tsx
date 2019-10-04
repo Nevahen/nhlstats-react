@@ -32,9 +32,6 @@ export class MatchPageComponent extends React.Component<OwnProps & RouteComponen
     } else {
       return this.renderDetails(fetching, currentMatch as IMatch)
     }
-
-
-    return (null)
   }
 
   renderDetails = (fetching: boolean, match: IMatch) => {

@@ -1,4 +1,4 @@
-import { Col, List, Typography, Avatar } from 'antd';
+import { Col, List, Avatar } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -6,8 +6,6 @@ import { fetchMatches } from '../_actions/match.actions';
 import { MatchStore } from '../_types/MatchStore';
 import { AppState } from '../App';
 import { Link } from 'react-router-dom';
-
-const { Title, Text } = Typography;
 
 interface IMatchContainer {
   matchStore: MatchStore,

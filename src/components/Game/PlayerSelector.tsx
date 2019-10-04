@@ -1,4 +1,4 @@
-import { Layout, Typography, List } from 'antd';
+import { Layout, List } from 'antd';
 import { shuffle } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -8,8 +8,6 @@ import { store } from '../../_store/store';
 import { GameState } from '../../_types/GameState';
 import { AppState } from '../../App';
 import { Button } from 'antd';
-
-const { Title } = Typography;
 
 interface IPlayerSelectorProps {
   players: any[];

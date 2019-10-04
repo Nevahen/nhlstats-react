@@ -1,6 +1,6 @@
 import React from 'react';
 import { ITeam } from '../../_types/ITeam';
-import { Row, Col } from 'antd';
+import { Row } from 'antd';
 
 interface ITeamDisplayerProps {
   team: ITeam | undefined ,
