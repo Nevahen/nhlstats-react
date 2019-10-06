@@ -1,9 +1,9 @@
-import { Col, Icon, List, Select, Spin, Avatar } from 'antd';
+import { Avatar, Col, Icon, List, Select } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateEvent as updateEventAction } from '../../_actions/match.actions';
-import { GameEventTypes, IGameEvent, ITeamUser, IUser } from '../../_types';
+import { GameEventTypes, IGameEvent, ITeamUser } from '../../_types';
 import { AppState } from '../../App';
 
 type IEditableEventState = {
@@ -20,7 +20,7 @@ type EventUpdate = {
 export const EditableEventItem = (props: { event: IGameEvent }) => {
 
   const [itemState, updateState] = useState<IEditableEventState>({ editing: false, eventUpdate: {} });
-  const {currentMatch, fetching} = useSelector((state: AppState) => state.matchStore)
+  const { currentMatch } = useSelector((state: AppState) => state.matchStore)
   const dispatch = useDispatch();
 
 

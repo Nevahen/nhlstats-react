@@ -55,7 +55,7 @@ export const matches = (state: MatchStore = initialState, action: any) => {
       ...state, 
       fetching: false,
       currentMatch: {
-        ... state.currentMatch,
+        ...state.currentMatch,
         events: state.currentMatch!.events.map(event => {
           if(event.id === action.payload.id) {
             return action.payload;
