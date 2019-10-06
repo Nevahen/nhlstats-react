@@ -28,7 +28,7 @@ const periodName = (period: number) => {
 const ScoreDisplayer = (props: ScoreDisplayerProps) => (
   <Col>
     <h2> { periodName(props.period) } </h2>
-    { props.period > 0 && <div><h2> { props.awayScore } - { props.homeScore }</h2></div> }
+    { props.period > 0 && <div><h2 className="text-center"> { props.awayScore } - { props.homeScore }</h2></div> }
   </Col>
 );
 

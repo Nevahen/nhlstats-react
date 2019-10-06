@@ -3,6 +3,7 @@ import { GameEventTypes, IGameEvent } from '../_types/GameEvent';
 import { GameState } from '../_types/GameState';
 import { AppState } from '../App';
 import Axios from '../Axios';
+import { message } from 'antd';
 
 export const addPlayer = (player: { name: string, id: number }) => {
   return {
@@ -49,6 +50,8 @@ export const gameEvent = (event: IGameEvent) => {
       type: 'GAME_EVENT',
       event: { ...event, period: gameState.gameStatus}
     });
+
+    message.success('Event added');
   }
 }
 

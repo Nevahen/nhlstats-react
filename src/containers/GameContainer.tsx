@@ -1,4 +1,4 @@
-import { Button, Col, Modal, notification, Row } from 'antd';
+import { Button, Col, List, Modal, Row } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -86,23 +86,28 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
         
           <Row type="flex" justify="center">
             <Col span={12} onClick={() => this.startSelectTeam(0)}>
-              <TeamDisplayer team={this.getTeam(this.props.gamestate.awayTeam)} />
+              <TeamDisplayer shortName={true} team={this.getTeam(this.props.gamestate.awayTeam)} />
               <Row type="flex" justify="center">
                 <TeamControls playerSelect={this.props.playerSelect} gameEvent={this.props.gameEvent} team={0} />
               </Row>
             </Col>
             <Col span={12} onClick={() => this.startSelectTeam(1)}>
-              <TeamDisplayer team={this.getTeam(this.props.gamestate.homeTeam)} />
+              <TeamDisplayer shortName={true} team={this.getTeam(this.props.gamestate.homeTeam)} />
               <Row type="flex" justify="center">
                 <TeamControls playerSelect={this.props.playerSelect} gameEvent={this.props.gameEvent} team={1} />
               </Row>
             </Col>
           </Row>
 
-          <Modal visible={this.props.gamestate.showPlayerSelect}>
+          <Modal 
+            visible={this.props.gamestate.showPlayerSelect}
+            footer={null}
+          >
 
           { this.props.gamestate.playerSelectEvent && mapTeamPlayers(this.props.gamestate.players, this.props.gamestate.playerSelectEvent!.team as 0 | 1).map(player => (
-            <Button onClick={() => this.props.gameEvent({ ...this.props.gamestate.playerSelectEvent!, player_id: player.id })}>{player.username}</Button>
+            <List.Item>
+              <Button onClick={() => this.props.gameEvent({ ...this.props.gamestate.playerSelectEvent!, player_id: player.id })}>{player.username}</Button>
+            </List.Item>
           )) }
 
 
@@ -156,10 +161,12 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
   
   if(gameStatus >= GameStatus.FIRST_PERIOD && gameStatus <= GameStatus.SHOOTOUT) {
     return (
-      <div>
+      <Row>
+        <Col>
         <Button disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { event_type: GameEventTypes.PERIOD }) }}>Next period</Button>
         { showEndGame() && <Button onClick={() => props.endGame()}>End game</Button>}
-      </div>
+        </Col>
+      </Row>
     )
   } else {
     return null
@@ -179,22 +186,21 @@ const TeamControls = (props: { gameEvent: Function, team: number, playerSelect: 
     } else {
       props.playerSelect(event);
     }
-
-    notification.open({
-      message: 'ok',
-    });
-
-    // props.gameEvent(event);
   }
 
   if(gameStatus >= GameStatus.FIRST_PERIOD && gameStatus <= GameStatus.SHOOTOUT) {
     return (
-      <div>
-      <Button onClick={() => handleButtonClick({ event_type: GameEventTypes.GOAL, team: props.team })}>Goal</Button>
-      <Button onClick={() => handleButtonClick({ event_type: GameEventTypes.MINOR_PENALTY, team: props.team })} >Minor Penalty</Button>
-      <Button onClick={() => handleButtonClick({ event_type: GameEventTypes.MAJOR_PENALTY, team: props.team })} >Major Penalty</Button>
-
-      </div>
+      <Row>
+        <Col style={{marginBottom: 5}} xs={24}>
+            <Button style={{width: '100%'}} onClick={() => handleButtonClick({ event_type: GameEventTypes.GOAL, team: props.team })}>Goal</Button>
+        </Col>
+        <Col style={{marginBottom: 5}} xs={24}>
+          <Button style={{width: '100%'}} onClick={() => handleButtonClick({ event_type: GameEventTypes.MINOR_PENALTY, team: props.team })} >Minor Penalty</Button>
+        </Col>
+        <Col style={{marginBottom: 5}} xs={24}>
+          <Button style={{width: '100%'}} onClick={() => handleButtonClick({ event_type: GameEventTypes.MAJOR_PENALTY, team: props.team })} >Major Penalty</Button>
+        </Col>
+      </Row>
     )
   } else {
     return null;

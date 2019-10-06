@@ -7,6 +7,7 @@ import { selectTeam } from '../../_actions/team.actions';
 import { ITeam } from '../../_types/ITeam';
 import { AppState } from '../../App';
 import { TeamDisplayer } from './TeamDisplayer';
+import { Input } from 'antd';
 
 interface TeamSelectorProps {
   teams: ITeam[];
@@ -15,15 +16,10 @@ interface TeamSelectorProps {
   selectingTeam: boolean;
 }
 
-const printSelectedTeam = (teams: ITeam[], id:number) => {
-  const team =  teams.find(team => team.id === id)
-  return team;
-} 
-
 const TeamSelectorComponent = (props: TeamSelectorProps) => {
 
-  const [selectedTeam, selectTeam] = useState();
   const selectingFor = useSelector((state: AppState) => state.newgame.selectingTeamFor);
+  const [filter, setFilter] = useState('');
 
   const selectText = () => {
     return selectingFor ? 'SELECT HOME TEAM' : 'SELECT AWAY TEAM';
@@ -36,22 +32,17 @@ const TeamSelectorComponent = (props: TeamSelectorProps) => {
   return (
     <div className='teamselector__container'>
       <h2>{ selectText() }</h2>
+      <Input onChange={(e) => setFilter(e.target.value) } type="text" placeholder='Filter'/>
       <div className='teamselector_teamscontainer'>
-        { props.teams.map(team => (
-          <div onClick={() => selectTeam(team.id)}>
+        { props.teams.filter(team => 
+          team.name.toLocaleLowerCase().indexOf(filter) !== -1 ||
+          team.shortname.toLocaleLowerCase().indexOf(filter) !== -1
+        )
+        .map(team => (
+          <div onClick={() => props.selectTeam(selectingFor, team.id)}>
             <TeamDisplayer team={team} />
           </div>
         ))}
-      </div>
-      <div>
-        <h3>selected:</h3>
-          { (selectedTeam && printSelectedTeam(props.teams, selectedTeam)) &&
-            printSelectedTeam(props.teams, selectedTeam)!.name
-          }
-        <button onClick={() => props.selectTeam(selectingFor, selectedTeam)} style={{
-          display: 'block',
-          margin: 'auto',
-        }}>OKEY</button>
       </div>
     </div>
   )

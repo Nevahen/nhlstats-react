@@ -13,6 +13,8 @@
 }
 
 .teamselector_teamscontainer {
+  justify-content: center;
+  align-items: center;
   display: flex;
   overflow: scroll;
 }
@@ -24,7 +26,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between
+    justify-content: center;
+    text-align: center;
   }
 
   .teamselector__container button {
