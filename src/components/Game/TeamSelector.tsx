@@ -32,7 +32,7 @@ const TeamSelectorComponent = (props: TeamSelectorProps) => {
   return (
     <div className='teamselector__container'>
       <h2>{ selectText() }</h2>
-      <Input onChange={(e) => setFilter(e.target.value) } type="text" placeholder='Filter'/>
+      <Input onChange={(e) => setFilter(e.target.value.toLocaleLowerCase()) } type="text" placeholder='Filter'/>
       <div className='teamselector_teamscontainer'>
         { props.teams.filter(team => 
           team.name.toLocaleLowerCase().indexOf(filter) !== -1 ||
