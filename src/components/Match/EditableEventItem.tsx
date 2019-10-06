@@ -51,7 +51,7 @@ export const EditableEventItem = (props: { event: IGameEvent }) => {
           period = 'Shootout';
           break;
         default:
-          period = 'Period' + realPeriod;
+          period = 'Period ' + realPeriod;
       }
 
 
