@@ -39,7 +39,7 @@ const TeamSelectorComponent = (props: TeamSelectorProps) => {
           team.shortname.toLocaleLowerCase().indexOf(filter) !== -1
         )
         .map(team => (
-          <div onClick={() => props.selectTeam(selectingFor, team.id)}>
+          <div key={team.id} onClick={() => props.selectTeam(selectingFor, team.id)}>
             <TeamDisplayer team={team} />
           </div>
         ))}

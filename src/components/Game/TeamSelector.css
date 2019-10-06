@@ -1,9 +1,11 @@
 .teamselector__container {
+  border-radius: 15px;
+  padding: 1%;
   width: 1000px;
-  height: 500px;
-  background: rgb(207, 207, 207);
+  height: 350px;
+  background: rgb(236, 238, 238);
   border: 1px solid gainsboro;
-  box-shadow: 0px 0px 15px 5px rgb(97, 97, 97);
+  box-shadow: 2px 2px 12px 2px rgb(187, 187, 187);
   position: fixed;
   top: 50%;
   left: 50%;
@@ -13,10 +15,10 @@
 }
 
 .teamselector_teamscontainer {
-  justify-content: center;
   align-items: center;
   display: flex;
-  overflow: scroll;
+  height: 200px;
+  overflow-x: scroll;
 }
 
 @media screen and (max-width: 768px) {
