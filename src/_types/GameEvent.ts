@@ -11,4 +11,5 @@ export interface IGameEvent {
   player_id?: number,
   team?: number,
   period?: number,
+  id?: number,
 }

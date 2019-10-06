@@ -18,7 +18,7 @@ export interface IMatch {
   scoreAway: number,
   date: string,
   players: IUser[],
-  events: IGameEvent[],
+  events: IGameEvent[] & { id: number},
   _homeTeam: ITeam,
   _awayTeam: ITeam,
 }

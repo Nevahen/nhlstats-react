@@ -1,4 +1,5 @@
 import Axios from '../Axios';
+import { IGameEvent } from '../_types';
 
 export const fetchMatches = () => {
   return async (dispatch: any) => {
@@ -6,8 +7,6 @@ export const fetchMatches = () => {
 
     try {
       const response = await Axios.get('/matches')
-
-
       dispatch(success(response.data));
     } catch (error) {
       dispatch(failure());
@@ -36,3 +35,18 @@ export const fetchMatch = (id: number) => {
   function failure(payload: any) { return { type: 'MATCH_FAILURE', payload} }
 }
 
+export const updateEvent = (id: number, updatedEvent: Partial<IGameEvent>) => {
+  return async (dispatch: any) => {
+    dispatch(request());
+    try {
+      const response = await Axios.patch('/events/' + id, updatedEvent);
+      dispatch(success(response.data));
+    } catch (error) {
+      dispatch(failure())
+    }
+
+    function request() { return { type: 'UPDATE_EVENT_FETCH' } }
+    function success(payload: any) { return { type: 'UPDATE_EVENT_SUCCESS', payload } }
+    function failure() { return { type: 'UPDATE_EVENT_FAILURE'} }
+  }
+}

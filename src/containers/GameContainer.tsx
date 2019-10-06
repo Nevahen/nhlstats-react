@@ -182,7 +182,7 @@ const TeamControls = (props: { gameEvent: Function, team: number, playerSelect: 
     const players = mapTeamPlayers(store.getState().newgame.players, event.team as 0 | 1);
 
     if(players.length === 1) {
-      props.gameEvent({ ...event, player: players[0].id })
+      props.gameEvent({ ...event, player_id: players[0].id })
     } else {
       props.playerSelect(event);
     }

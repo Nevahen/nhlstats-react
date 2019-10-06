@@ -1,4 +1,4 @@
-import { Breadcrumb, Col, Layout, Row, Spin } from 'antd';
+import { Breadcrumb, Col, Layout, Row, Spin, List } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -9,6 +9,7 @@ import { IMatch, MatchStore } from '../../_types/MatchStore';
 import { AppState } from '../../App';
 import { TeamDisplayer } from '../Game/TeamDisplayer';
 import { Typography} from 'antd';
+import { EditableEventItem } from './EditableEventItem';
 const { Title } = Typography;
 
 type MatchParams = { id: string | undefined }
@@ -62,6 +63,18 @@ export class MatchPageComponent extends React.Component<OwnProps & RouteComponen
             <Row type="flex" align="middle" justify="center">
               <Col span={8}><MatchPlayerList players={match.players} team={0} /></Col>
               <Col span={8}><MatchPlayerList players={match.players} team={1} /></Col>
+            </Row>
+            <Row type="flex" align="middle" justify="center">
+              <Title level={3}> Events</Title>
+            </Row>
+            <Row>
+              <List 
+                dataSource={match.events}
+                style={{width: '100%'}}
+                renderItem={item => (
+                  <EditableEventItem event={item} />
+                )}
+              />
             </Row>
           </Layout.Content>
 

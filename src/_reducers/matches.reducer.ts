@@ -43,6 +43,29 @@ export const matches = (state: MatchStore = initialState, action: any) => {
       ...state, fetching: false, currentMatch: action.payload,
     }
   }
+
+  if (action.type === "UPDATE_EVENT_FETCH") {
+    return {
+      ...state, fetching: true,
+    }
+  }
+
+  if (action.type === "UPDATE_EVENT_SUCCESS") {
+    return {
+      ...state, 
+      fetching: false,
+      currentMatch: {
+        ... state.currentMatch,
+        events: state.currentMatch!.events.map(event => {
+          if(event.id === action.payload.id) {
+            return action.payload;
+          } else {
+            return event;
+          }
+        })
+      }
+    }
+  }
   
   return state;
 }
