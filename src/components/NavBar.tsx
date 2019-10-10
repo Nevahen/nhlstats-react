@@ -25,7 +25,7 @@ const NavBar = (props: INavBarProps) => {
 
   return (
     
-      <Menu theme="dark" mode="horizontal">
+      <Menu theme="dark" style={{ lineHeight: '64px' }} mode="horizontal">
   
       { props.loggedIn  
         

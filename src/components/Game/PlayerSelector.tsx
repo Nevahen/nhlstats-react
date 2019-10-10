@@ -42,8 +42,8 @@ const PlayerSelectorElement = (props: IPlayerSelectorProps) => {
       <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Home" team={1} />
 
       <div>
-        <button onClick={randomizePlayers}>Randomize Teams</button>
-        <button onClick={() => props.nextStep()}>START</button>
+        <Button onClick={randomizePlayers}>Randomize Teams</Button>
+        <Button onClick={() => props.nextStep()}>START</Button>
       </div>
     </div>
   )

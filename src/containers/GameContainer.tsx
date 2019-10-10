@@ -163,8 +163,8 @@ const GameControls = (props: {gameEvent: Function, endGame: Function}) => {
     return (
       <Row>
         <Col>
-        <Button disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { event_type: GameEventTypes.PERIOD }) }}>Next period</Button>
-        { showEndGame() && <Button onClick={() => props.endGame()}>End game</Button>}
+        <Button className="button--mobile-big" disabled={!canMoveToNextPeriod()} onClick={() => { props.gameEvent( { event_type: GameEventTypes.PERIOD }) }}>Next period</Button>
+        { showEndGame() && <Button className="button--mobile-big" onClick={() => props.endGame()}>End game</Button>}
         </Col>
       </Row>
     )
@@ -192,13 +192,13 @@ const TeamControls = (props: { gameEvent: Function, team: number, playerSelect: 
     return (
       <Row>
         <Col style={{marginBottom: 5}} xs={24}>
-            <Button style={{width: '100%'}} onClick={() => handleButtonClick({ event_type: GameEventTypes.GOAL, team: props.team })}>Goal</Button>
+            <Button className="button--mobile-big" style={{width: '100%'}} onClick={() => handleButtonClick({ event_type: GameEventTypes.GOAL, team: props.team })}>Goal</Button>
         </Col>
         <Col style={{marginBottom: 5}} xs={24}>
-          <Button style={{width: '100%'}} onClick={() => handleButtonClick({ event_type: GameEventTypes.MINOR_PENALTY, team: props.team })} >Minor Penalty</Button>
+          <Button className="button--mobile-big" style={{width: '100%'}} onClick={() => handleButtonClick({ event_type: GameEventTypes.MINOR_PENALTY, team: props.team })} >Minor Penalty</Button>
         </Col>
         <Col style={{marginBottom: 5}} xs={24}>
-          <Button style={{width: '100%'}} onClick={() => handleButtonClick({ event_type: GameEventTypes.MAJOR_PENALTY, team: props.team })} >Major Penalty</Button>
+          <Button className="button--mobile-big" style={{width: '100%'}} onClick={() => handleButtonClick({ event_type: GameEventTypes.MAJOR_PENALTY, team: props.team })} >Major Penalty</Button>
         </Col>
       </Row>
     )
