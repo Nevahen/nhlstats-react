@@ -89,7 +89,7 @@ export const EditableEventItem = (props: { event: IGameEvent }) => {
       updateState({...itemState, eventUpdate: updateObj })
     }
     return (
-      <Col span={20}>
+      <Col span={18}>
         <Select onChange={(e: string | number | undefined) => handleEventUpdate(e, 'player_id')} style={{width: 200}} defaultValue={props.event.player_id}>
           {currentMatch!.players.map(player => (
             <Select.Option value={ player.id }>{player.username}</Select.Option>

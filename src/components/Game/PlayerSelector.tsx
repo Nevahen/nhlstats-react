@@ -1,4 +1,4 @@
-import { Layout, List } from 'antd';
+import { List, Col } from 'antd';
 import { shuffle } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -34,9 +34,9 @@ const PlayerSelectorElement = (props: IPlayerSelectorProps) => {
 
   return (
     <div>
-      <ul className="available__list">
+      <div className="available__list">
         { getAvailablePlayer().map(player => (<Button className="playerlist__item" onClick={() => props.addPlayer({...player, team: null})} key={player.id}>{player.username}</Button>) )}
-      </ul>
+      </div>
       <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Away" team={0} />
       <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Unassigned" team={null} />
       <TeamPlayers removePlayer={props.removePlayer} assignPlayer={props.assignPlayer} title="Home" team={1} />
@@ -60,26 +60,27 @@ const TeamPlayers = (props: {
   assignPlayer: Function,
   removePlayer: Function,
 } ) => (
-  <Layout>
-      <Layout.Content>
-        <List       
-          bordered 
+ 
+        <List      
+          className="teamplayers__list" 
+          bordered
+          style={{
+            marginBottom: '5px'
+          }}
           header={<div>{props.title}</div>}
           dataSource={getTeamPlayers(props.team)}
           locale={{ emptyText: ' '}}
           renderItem={player => (
             <List.Item style={{justifyContent: 'space-between'}}>
-              <span className="playerlist__name"> { player.username } </span>
+              <Col xs={24} sm={8}><span className="playerlist__name"> { player.username } </span> </Col>
               <div>
-                <Button onClick={ () => props.assignPlayer(player.id, 0) }>AWAY</Button>
-                <Button onClick={ () => props.assignPlayer(player.id, 1) }>HOME</Button>
+                <Button onClick={ () => props.assignPlayer(player.id, 0) }>A</Button>
+                <Button onClick={ () => props.assignPlayer(player.id, 1) }>H</Button>
                 <Button type="danger" onClick={ () => props.removePlayer(player.id) }>REMOVE</Button>
               </div>
             </List.Item> 
           )
         }/>
-      </Layout.Content>
-  </Layout>
 );
 
 const stateToProps = (state: AppState ) => ({

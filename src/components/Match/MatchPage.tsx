@@ -61,8 +61,8 @@ export class MatchPageComponent extends React.Component<OwnProps & RouteComponen
               <Title level={3}> Players</Title>
             </Row>
             <Row type="flex" align="middle" justify="center">
-              <Col span={8}><MatchPlayerList players={match.players} team={0} /></Col>
-              <Col span={8}><MatchPlayerList players={match.players} team={1} /></Col>
+              <Col xs={24} md={12}><MatchPlayerList players={match.players} team={0} /></Col>
+              <Col xs={24} md={12}><MatchPlayerList players={match.players} team={1} /></Col>
             </Row>
             <Row type="flex" align="middle" justify="center">
               <Title level={3}> Events</Title>

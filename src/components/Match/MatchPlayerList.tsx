@@ -2,6 +2,8 @@ import React from 'react';
 import { IUser } from '../../_types/UserStore';
 import { List } from 'antd';
 import { mapTeamPlayers } from '../../utils/TeamUtils';
+import { Typography } from 'antd';
+const { Text } = Typography;
 
 interface Props {
   players: IUser[], 
@@ -10,9 +12,18 @@ interface Props {
 
 
 export const MatchPlayerList = (props: Props) => (
-  <List dataSource={mapTeamPlayers(props.players, props.team)}
+  <List 
+    style={{textAlign: 'center'}} 
+    header={
+      <div style={{fontSize: 18}}>
+      { props.team ? 
+      <Text strong>Home</Text> : 
+      <Text strong>Away</Text> }
+      </div>
+    }
+    dataSource={mapTeamPlayers(props.players, props.team)}
     renderItem={item => (
-      <List.Item>{item.username}</List.Item>
+      <List.Item style={{textAlign: 'center'}}> {item.username}</List.Item>
     )}
   />
 )

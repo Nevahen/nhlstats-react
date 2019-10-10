@@ -13,3 +13,16 @@
   height: 56px;
   }
 }
+
+.teamplayers__list .ant-list-header {
+  background: #00407c;
+  color: ghostwhite;
+}
+
+.available__list {
+  margin-bottom: 5px;
+}
+
+.playerlist__item {
+  margin: 0px 5px 5px 0px;
+}

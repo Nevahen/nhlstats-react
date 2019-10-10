@@ -18,7 +18,6 @@ export const fetchTeams = () => {
 }
 
 export const selectTeam = (target: number, teamID: number) => {
-  console.log(target, teamID)
   return {
     type: 'SELECT_TEAM',
     target,

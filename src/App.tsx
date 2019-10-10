@@ -35,7 +35,7 @@ class App extends React.Component<AppState> {
         <Layout.Header style={{padding: 0}}>
           <NavBar />
         </Layout.Header >
-        <Layout.Content style={{ margin:'auto', marginTop: 50, width: 600, maxWidth: '100vw', minHeight: '93vh'}}>
+        <Layout.Content style={{ margin:'auto', marginTop: 50, padding: '2%' , width: 600, maxWidth: '100vw', minHeight: '93vh'}}>
           <Switch>
             <Route path="/login" component={LoginForm} />
             <PrivateRoute exact path="/matches" component={MatchesContainer}/>

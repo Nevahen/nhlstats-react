@@ -84,7 +84,7 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
             <ScoreDisplayer />
           </Row>
         
-          <Row type="flex" justify="center">
+          <Row type="flex" gutter={12} justify="center">
             <Col span={12} onClick={() => this.startSelectTeam(0)}>
               <TeamDisplayer shortName={true} team={this.getTeam(this.props.gamestate.awayTeam)} />
               <Row type="flex" justify="center">

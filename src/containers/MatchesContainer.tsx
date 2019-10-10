@@ -1,4 +1,4 @@
-import { Avatar, Col, Divider, Icon, List, Popover, Row } from 'antd';
+import { Avatar, Col, Icon, List, Popover, Row } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -55,7 +55,6 @@ render = () => (
 }
 
 const getMatchPlayers = (match: IMatch) => {
-  console.log(match)
   return (
     <div>
       <Title level={ 4 }>Away <Avatar shape="square" src={'/assets/nhl/' + match._awayTeam.shortname + '.gif'} /> </Title>
