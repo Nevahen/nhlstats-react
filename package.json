@@ -44,6 +44,6 @@
   "devDependencies": {
     "@types/lodash": "^4.14.141",
     "@types/react-redux": "^7.1.5",
-    "@types/react-router-dom": "^4.3.5"
+    "@types/react-router-dom": "^5.1.0"
   }
 }
