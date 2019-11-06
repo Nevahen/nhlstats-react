@@ -55,6 +55,23 @@ export const gameEvent = (event: IGameEvent) => {
   }
 }
 
+export const undoEvent = () => {
+  return (dispatch: any, getState: any) => {
+    const gameState = getState().newgame as GameState;
+
+    const typeMap = {
+      0: 'Period',
+      1: 'Goal',
+      2: 'Minor Penalty',
+      3: 'Major Penalty',
+    }
+
+    message.info('Latest event removed: ' + typeMap[gameState.gameEvents[gameState.gameEvents.length - 1].event_type]);
+
+    dispatch({ type: "UNDO_EVENT" });
+  }
+}
+
 export const playerSelect = (event: IGameEvent) => {
   return {
     type: "PLAYER_SELECT",

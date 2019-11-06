@@ -1,8 +1,8 @@
-import { Button, Col, List, Modal, Row } from 'antd';
+import { Button, Col, List, Modal, Row, Icon } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { addPlayer, endGame, gameEvent, playerSelect } from '../_actions/game.actions';
+import { addPlayer, endGame, gameEvent, playerSelect, undoEvent } from '../_actions/game.actions';
 import { fetchTeams, startSelectTeam } from '../_actions/team.actions';
 import UserActions from '../_actions/user.actions';
 import { store } from '../_store/store';
@@ -27,6 +27,7 @@ interface IGameContainerProps {
   startSelectTeam: Function;
   endGame: Function;
   playerSelect: Function;
+  undoEvent: Function;
 }
 
 interface IGameContainerState {
@@ -80,6 +81,7 @@ class GameContainer extends React.Component<IGameContainerProps, IGameContainerS
       case 'team_select': {
       return (
         <div className="game--container">
+          <Button onClick={() => this.props.undoEvent() } disabled={this.props.gamestate.gameEvents.length <= 1}><Icon type="undo" /></Button>
           <Row type="flex" justify="center">
             <ScoreDisplayer />
           </Row>
@@ -216,6 +218,7 @@ const mapActionsToProps = {
   startSelectTeam: startSelectTeam,
   endGame: endGame,
   playerSelect: playerSelect,
+  undoEvent: undoEvent,
 }
 
 const mapStateToProps = (state: AppState ) => ({

@@ -1,4 +1,4 @@
-import { GameStatus } from '../_types/';
+import { GameStatus, IGameEvent, GameEventTypes } from '../_types/';
 import { GameState } from '../_types/GameState';
 
 const initialState: GameState = {
@@ -85,5 +85,53 @@ export const newgame = (state = initialState, action: any) => {
     }
   }
 
+  if(action.type === "UNDO_EVENT") {
+
+    const modifiedEvents = state.gameEvents.slice(0, state.gameEvents.length - 1);
+    const newStatus = calculateGameState(modifiedEvents);
+
+    return {
+      ...state, 
+      gameEvents: modifiedEvents,
+      scoreHome: newStatus.scoreHome,
+      scoreAway: newStatus.scoreAway,
+      gameStatus: newStatus.gameStatus,
+    }
+  }
+
   return state;
+}
+
+/**
+ * Computed period and goals from gameEvents
+ * @todo Make these values computed.
+ * @param events game events
+ */
+const calculateGameState = (events: IGameEvent[]) => {
+
+  const result = {
+    scoreHome: 0,
+    scoreAway: 0,
+    gameStatus: 0,
+  }
+
+  return events.reduce((current: any, event: IGameEvent) => {
+
+    if(event.event_type === GameEventTypes.GOAL) {
+      const team = event.team ? 'scoreHome' : 'scoreAway';
+      return {
+        ...current,
+        [team]: current[team] + 1,
+      }
+    }
+
+    if(event.event_type === GameEventTypes.PERIOD) {
+      return {
+        ...current,
+        gameStatus: current.gameStatus + 1,
+      }
+    }
+
+    return current;
+  }, result)
 }
