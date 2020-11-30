@@ -7,7 +7,7 @@
     "@types/node": "14.14.10",
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
-    "antd": "^4.8.5",
+    "antd": "^4.8.6",
     "axios": "^0.21.0",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
